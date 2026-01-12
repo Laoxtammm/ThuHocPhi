@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Danh sách học phần";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_StudentNav")
+    <section class="portal-content">
+        <h1>Danh sách học phần mở đăng ký</h1>
+        <p>Chọn học phần phù hợp với kế hoạch học tập.</p>
+
+        <table class="portal-table">
+            <thead>
+                <tr>
+                    <th>Mã học phần</th>
+                    <th>Tên học phần</th>
+                    <th>Số tín chỉ</th>
+                    <th>Điều kiện</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>IT101</td>
+                    <td>Nhập môn lập trình</td>
+                    <td>3</td>
+                    <td>Không</td>
+                    <td><button class="btn" type="button" data-add-course="IT101" data-name="Nhập môn lập trình" data-credits="3">Thêm</button></td>
+                </tr>
+                <tr>
+                    <td>MA201</td>
+                    <td>Giải tích 2</td>
+                    <td>4</td>
+                    <td>Đã học Giải tích 1</td>
+                    <td><button class="btn" type="button" data-add-course="MA201" data-name="Giải tích 2" data-credits="4" data-prereq="MA101">Thêm</button></td>
+                </tr>
+                <tr>
+                    <td>CN301</td>
+                    <td>Công nghệ phần mềm</td>
+                    <td>3</td>
+                    <td>Đã học IT101</td>
+                    <td><button class="btn" type="button" data-add-course="CN301" data-name="Công nghệ phần mềm" data-credits="3" data-prereq="IT101">Thêm</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="note" id="course-note"></p>
+
+        <div class="toolbar">
+            <a class="btn secondary" asp-controller="Student" asp-action="DangKyTinChi">Quay lại đăng ký</a>
+        </div>
+    </section>
+</div>
+
+<div class="modal hidden" id="course-modal">
+    <div class="modal-content">
+        <h3>Thông tin học phần</h3>
+        <p id="modal-course-name"></p>
+        <div class="modal-section">
+            <label>Chọn ca học</label>
+            <div class="modal-options" id="modal-schedules"></div>
+        </div>
+        <div class="toolbar">
+            <button class="btn secondary" type="button" id="modal-cancel">Hủy</button>
+            <button class="btn" type="button" id="modal-confirm" disabled>Thêm vào đăng ký</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/student-courses.js" asp-append-version="true"></script>
+}

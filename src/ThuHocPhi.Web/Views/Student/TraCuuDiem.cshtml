@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Tra cứu điểm thi";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_StudentNav")
+    <section class="portal-content">
+        <h1>Tra cứu điểm thi</h1>
+        <p>Tra cứu điểm theo học kỳ và môn học.</p>
+
+        <div class="toolbar">
+            <span class="tag">Học kỳ 1 - 2025/2026</span>
+            <button class="btn secondary" type="button">Lọc học kỳ</button>
+        </div>
+
+        <table class="portal-table">
+            <thead>
+                <tr>
+                    <th>Môn học</th>
+                    <th>Số TC</th>
+                    <th>Điểm giữa kỳ</th>
+                    <th>Điểm cuối kỳ</th>
+                    <th>Điểm tổng kết</th>
+                    <th>Xếp loại</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nhập môn lập trình</td>
+                    <td>3</td>
+                    <td>8.0</td>
+                    <td>8.5</td>
+                    <td>8.3</td>
+                    <td><span class="badge ok">Giỏi</span></td>
+                </tr>
+                <tr>
+                    <td>Xác suất thống kê</td>
+                    <td>3</td>
+                    <td>7.0</td>
+                    <td>7.5</td>
+                    <td>7.3</td>
+                    <td><span class="badge ok">Khá</span></td>
+                </tr>
+                <tr>
+                    <td>Vật lý đại cương</td>
+                    <td>4</td>
+                    <td>6.5</td>
+                    <td>6.0</td>
+                    <td>6.2</td>
+                    <td><span class="badge warn">Trung bình</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

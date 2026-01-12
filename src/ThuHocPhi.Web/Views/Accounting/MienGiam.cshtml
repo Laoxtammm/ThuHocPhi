@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Ke toan - Mien giam";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_AccountingNav")
+    <section class="portal-content">
+        <h1>Phe duyet mien giam hoc phi</h1>
+        <p>Sinh vien nop don de nghi, ke toan phe duyet va cap nhat cong no.</p>
+
+        <div class="section-block">
+            <h3>Phieu phe duyet mien giam</h3>
+            <div class="toolbar">
+                <input class="input-text" id="mg-ma-sv" placeholder="Ma sinh vien" />
+                <input class="input-text" id="mg-ma-chinh-sach" placeholder="Ma chinh sach" />
+                <input class="input-text" id="mg-ma-hoc-ky" placeholder="Ma hoc ky" />
+            </div>
+            <div class="toolbar">
+                <input class="input-text" id="mg-ghi-chu" placeholder="Noi dung & tieu chuan mien giam" />
+                <button class="btn" type="button" id="btn-duyet-mien-giam">Phe duyet mien giam</button>
+            </div>
+            <pre class="portal-result" id="mg-output"></pre>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/accounting-approvals.js" asp-append-version="true"></script>
+}

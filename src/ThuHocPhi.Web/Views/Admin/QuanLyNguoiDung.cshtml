@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Quản lý người dùng";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_AdminNav")
+    <section class="portal-content">
+        <h1>Quản lý người dùng</h1>
+        <p>Tạo mới, phân quyền và khóa/mở tài khoản.</p>
+
+        <div class="toolbar">
+            <button class="btn" type="button">Thêm người dùng</button>
+            <button class="btn secondary" type="button">Xuất danh sách</button>
+        </div>
+
+        <table class="portal-table">
+            <thead>
+                <tr>
+                    <th>Tài khoản</th>
+                    <th>Họ tên</th>
+                    <th>Vai trò</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>admin</td>
+                    <td>Quản trị hệ thống</td>
+                    <td>Administrator</td>
+                    <td><span class="badge ok">Hoạt động</span></td>
+                    <td><a class="btn secondary" href="#">Sửa</a></td>
+                </tr>
+                <tr>
+                    <td>ketoan01</td>
+                    <td>Phòng Tài chính</td>
+                    <td>PhongTaiChinh</td>
+                    <td><span class="badge ok">Hoạt động</span></td>
+                    <td><a class="btn secondary" href="#">Sửa</a></td>
+                </tr>
+                <tr>
+                    <td>daotao01</td>
+                    <td>Phòng Đào tạo</td>
+                    <td>PhongDaoTao</td>
+                    <td><span class="badge warn">Tạm khóa</span></td>
+                    <td><a class="btn secondary" href="#">Mở khóa</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

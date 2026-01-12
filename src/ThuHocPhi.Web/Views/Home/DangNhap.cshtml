@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Đăng nhập";
+    ViewData["BodyClass"] = "auth-page";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/page.css" asp-append-version="true" />
+}
+
+<section class="page">
+    <div class="auth-card">
+        <h1>Đăng nhập</h1>
+        <p>Vui lòng sử dụng tài khoản được cấp để truy cập hệ thống.</p>
+        <p>Sinh viên đăng nhập bằng <strong>mã sinh viên</strong> viết thường (tên đăng nhập và mật khẩu giống nhau).</p>
+        <form id="login-form">
+            <label>Tên đăng nhập</label>
+            <input type="text" name="username" required />
+            <label>Mật khẩu</label>
+            <input type="password" name="password" required />
+            <button type="submit">Đăng nhập</button>
+            <div class="note" id="login-note"></div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/auth.js" asp-append-version="true"></script>
+}

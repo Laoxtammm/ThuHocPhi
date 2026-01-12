@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Giáo vụ";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_EducationNav")
+    <section class="portal-content">
+        <h1>Quản lý học phần &amp; kết quả</h1>
+        <p>Đề xuất học phần bắt buộc, điều kiện, tự chọn và chính sách tín chỉ tối thiểu.</p>
+
+        <div class="section-block" id="bat-buoc">
+            <h3>Học phần bắt buộc</h3>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Mã học phần</th>
+                        <th>Tên học phần</th>
+                        <th>Số tín chỉ</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>IT101</td>
+                        <td>Nhập môn lập trình</td>
+                        <td>3</td>
+                        <td>Áp dụng cho khóa K58</td>
+                    </tr>
+                    <tr>
+                        <td>MA201</td>
+                        <td>Giải tích 2</td>
+                        <td>4</td>
+                        <td>Bắt buộc trước học phần nâng cao</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-block" id="dieu-kien">
+            <h3>Học phần điều kiện</h3>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Học phần</th>
+                        <th>Điều kiện hoàn thành</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CN301 - Công nghệ phần mềm</td>
+                        <td>Đã hoàn thành IT101 và MA201</td>
+                        <td>Đủ điều kiện mới được đăng ký</td>
+                    </tr>
+                    <tr>
+                        <td>AI401 - Trí tuệ nhân tạo</td>
+                        <td>Đã hoàn thành Data Structure</td>
+                        <td>Học phần nâng cao</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-block" id="tu-chon">
+            <h3>Học phần tự chọn</h3>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Nhóm tự chọn</th>
+                        <th>Danh sách học phần</th>
+                        <th>Số tín chỉ yêu cầu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nhóm chuyên đề</td>
+                        <td>IoT, Cloud Computing, Big Data</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>Nhóm kỹ năng</td>
+                        <td>Kỹ năng mềm, Quản trị dự án</td>
+                        <td>3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-block" id="tin-chi">
+            <h3>Tín chỉ tối thiểu</h3>
+            <div class="toolbar">
+                <span class="tag">Tối thiểu 12 tín chỉ/kỳ học</span>
+                <span class="tag">Tối đa 25 tín chỉ/kỳ học</span>
+            </div>
+            <p>Giáo vụ thiết lập quy định tín chỉ để đảm bảo tiến độ học tập của sinh viên.</p>
+        </div>
+
+        <div class="section-block" id="thong-bao">
+            <h3>Thông báo kết quả học tập</h3>
+            <p>Gửi thông báo kết quả học tập cho sinh viên sau mỗi kỳ.</p>
+            <div class="toolbar">
+                <button class="btn" type="button">Gửi thông báo</button>
+                <button class="btn secondary" type="button">Xuất danh sách kết quả</button>
+            </div>
+        </div>
+    </section>
+</div>

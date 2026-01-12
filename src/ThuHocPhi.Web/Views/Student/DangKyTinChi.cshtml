@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Đăng ký tín chỉ";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_StudentNav")
+    <section class="portal-content">
+        <h1>Đăng ký tín chỉ</h1>
+        <p>Chọn học phần theo kế hoạch đào tạo. Thanh toán học phí đầy đủ trước khi đăng ký thi kết thúc môn.</p>
+
+        <div class="toolbar">
+            <a class="btn" asp-controller="Student" asp-action="DanhSachHocPhan">Thêm học phần</a>
+            <button class="btn secondary" type="button" id="btn-save-registration">Lưu đăng ký</button>
+            <span class="badge warn">Học phí chưa hoàn tất</span>
+        </div>
+        <p class="note" id="save-note"></p>
+
+        <table class="portal-table">
+            <thead>
+                <tr>
+                    <th>Mã học phần</th>
+                    <th>Tên học phần</th>
+                    <th>Số TC</th>
+                    <th>Lịch học</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody id="registered-body">
+                <tr>
+                    <td colspan="5">Chưa có học phần nào được đăng ký.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-block">
+            <h3>Đăng ký thi kết thúc môn</h3>
+            <p>Chỉ mở khi học phí đã thanh toán đầy đủ.</p>
+            <button class="btn disabled" type="button">Đăng ký thi kết thúc môn</button>
+            <div class="alert">Bạn cần thanh toán học phí để kích hoạt chức năng đăng ký thi.</div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/student-actions.js" asp-append-version="true"></script>
+}

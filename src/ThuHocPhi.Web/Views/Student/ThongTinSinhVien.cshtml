@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Thông tin sinh viên";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_StudentNav")
+    <section class="portal-content">
+        <h1>Thông tin sinh viên</h1>
+        <p>Cập nhật thông tin cá nhân và kiểm tra trạng thái hồ sơ.</p>
+
+        <div class="section-block">
+            <div class="toolbar">
+                <img src="/pictures/Logo_MTA_new.png" alt="Ảnh sinh viên" class="info-avatar" id="student-info-avatar" />
+            </div>
+            <table class="portal-table info-table">
+                <tbody>
+                    <tr>
+                        <th>Mã sinh viên</th>
+                        <td id="student-info-ma">--</td>
+                    </tr>
+                    <tr>
+                        <th>Họ và tên</th>
+                        <td id="student-info-ten">--</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày sinh</th>
+                        <td id="student-info-ngay-sinh">--</td>
+                    </tr>
+                    <tr>
+                        <th>Lớp</th>
+                        <td id="student-info-lop">--</td>
+                    </tr>
+                    <tr>
+                        <th>Hệ đào tạo</th>
+                        <td id="student-info-he">--</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td id="student-info-email">--</td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại</th>
+                        <td id="student-info-phone">--</td>
+                    </tr>
+                    <tr>
+                        <th>Trạng thái học tập</th>
+                        <td id="student-info-status">--</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="toolbar">
+            <a class="btn" asp-controller="Student" asp-action="CapNhatThongTin">Cập nhật thông tin</a>
+            <a class="btn secondary" asp-controller="Student" asp-action="DoiMatKhau">Đổi mật khẩu</a>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ThuHocPhi</title>
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="@ViewData["BodyClass"]">
+    <header class="site-header">
+        <div class="header-brand">
+            <img src="~/pictures/Logo_MTA_new.png" alt="Logo MTA" class="brand-logo" />
+            <div>
+                <p class="brand-title">Học viện kỹ thuật quân sự -</p>
+                <p class="brand-sub">Hệ thống quản lý thu học phí</p>
+            </div>
+        </div>
+        <nav class="header-nav">
+            <a asp-controller="Home" asp-action="Index" class="nav-basic nav-link">Trang chủ</a>
+            <a asp-controller="Home" asp-action="GioiThieu" class="nav-extra nav-link">Giới thiệu</a>
+            <div class="nav-dropdown nav-extra">
+                <a asp-controller="Home" asp-action="DaoTao" class="nav-link">Đào tạo</a>
+                <div class="dropdown-menu">
+                    <a asp-controller="Home" asp-action="DaoTao" asp-fragment="cam-ket">Cam kết chuẩn đầu ra</a>
+                    <a asp-controller="Home" asp-action="DaoTao" asp-fragment="dai-hoc">Đào tạo đại học</a>
+                    <a asp-controller="Home" asp-action="DaoTao" asp-fragment="cao-hoc">Đào tạo sau đại học</a>
+                    <a asp-controller="Home" asp-action="DaoTao" asp-fragment="lien-thong">Đào tạo chuyên cấp liên thông</a>
+                    <a asp-controller="Home" asp-action="DaoTao" asp-fragment="boi-duong">Bổ túc, bồi dưỡng</a>
+                    <a asp-controller="Home" asp-action="DaoTao" asp-fragment="ky-su-dan-su">Chương trình đào tạo đại học (Hệ KS Dân sự)</a>
+                    <a asp-controller="Home" asp-action="DaoTao" asp-fragment="tra-cuu-diem">Tra cứu điểm thi</a>
+                    <a asp-controller="Home" asp-action="DaoTao" asp-fragment="tra-cuu-van-bang">Tra cứu văn bằng</a>
+                </div>
+            </div>
+            <a asp-controller="Home" asp-action="DangKyHoc" class="nav-extra nav-link">Đăng ký học</a>
+            <a asp-controller="Home" asp-action="LienHe" class="nav-basic nav-link">Liên hệ</a>
+            <a asp-controller="Home" asp-action="DangKy" class="nav-auth nav-register nav-link">Đăng ký</a>
+            <a asp-controller="Home" asp-action="DangNhap" class="nav-auth nav-login nav-link">Đăng nhập</a>
+            <button type="button" class="nav-auth nav-logout nav-link hidden">Đăng xuất</button>
+            <span class="nav-date" id="today-date"></span>
+        </nav>
+    </header>
+
+    <main class="site-main">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div>
+                <h4>Liên hệ</h4>
+                <p>Phòng Tài chính tầng 1, tòa nhà S4</p>
+                <p>Địa chỉ: 236 Hoàng Quốc Việt, Nghĩa Đô, Hà Nội</p>
+            </div>
+            <div>
+                <h4>Thông tin</h4>
+                <p>Tel: (+84) 069.515200</p>
+                <p>Email: info@mta.edu.vn</p>
+            </div>
+            <div>
+                <h4>Website</h4>
+                <p><a href="https://mta.edu.vn">https://mta.edu.vn</a></p>
+            </div>
+        </div>
+        <div class="footer-copy">© 2026 Bản quyền thuộc Ban CNTT/P4 - Học viện KTQS</div>
+    </footer>
+
+    <script src="~/js/layout.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

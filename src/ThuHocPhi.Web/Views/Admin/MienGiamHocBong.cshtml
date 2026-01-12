@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Miễn giảm & học bổng";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_AdminNav")
+    <section class="portal-content">
+        <h1>Miễn giảm &amp; học bổng</h1>
+        <p>Theo dõi danh sách sinh viên đã được miễn giảm và phê duyệt học bổng.</p>
+
+        <div class="section-block">
+            <h3>Sinh viên được miễn giảm học phí</h3>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã SV</th>
+                        <th>Họ tên</th>
+                        <th>Chính sách</th>
+                        <th>Mức miễn giảm</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>SV002</td>
+                        <td>Trần Thị Bạch</td>
+                        <td>Hộ nghèo/Vùng sâu vùng xa</td>
+                        <td>50%</td>
+                        <td>Đã phê duyệt bởi kế toán</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-block">
+            <h3>Phê duyệt học bổng</h3>
+            <div class="toolbar">
+                <input class="input-text" id="hb-ma-sv" placeholder="Mã sinh viên" />
+                <input class="input-text" id="hb-ma-hoc-bong" placeholder="Mã học bổng" />
+                <input class="input-text" id="hb-ma-hoc-ky" placeholder="Mã học kỳ" />
+            </div>
+            <div class="toolbar">
+                <input class="input-text" id="hb-ghi-chu" placeholder="Ghi chú (nếu có)" />
+                <button class="btn" type="button" id="btn-duyet-hoc-bong">Phê duyệt học bổng</button>
+            </div>
+            <pre class="portal-result" id="hb-output"></pre>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin-hoc-bong.js" asp-append-version="true"></script>
+}

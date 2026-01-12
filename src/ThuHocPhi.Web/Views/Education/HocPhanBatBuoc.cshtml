@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "Giao vu - Hoc phan bat buoc";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_EducationNav")
+    <section class="portal-content">
+        <h1>Hoc phan bat buoc</h1>
+        <p>Quan ly hoc phan bat buoc theo chuyen nganh va lop.</p>
+
+        <div class="section-block" data-edu-filter data-target="edu-required-table">
+            <h3>Bo loc</h3>
+            <div class="toolbar">
+                <select class="input-text" data-filter="major">
+                    <option value="all">Tat ca chuyen nganh</option>
+                    <option value="CNPM">CNPM</option>
+                    <option value="ATTT">ATTT</option>
+                    <option value="HTTT">HTTT</option>
+                </select>
+                <select class="input-text" data-filter="class">
+                    <option value="all">Tat ca lop</option>
+                    <option value="K58">K58</option>
+                    <option value="K59">K59</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section-block" data-edu-form data-target="edu-required-table">
+            <h3>Them / cap nhat hoc phan bat buoc</h3>
+            <div class="toolbar">
+                <input class="input-text" data-field="code" placeholder="Ma hoc phan" />
+                <input class="input-text" data-field="name" placeholder="Ten hoc phan" />
+                <input class="input-text" data-field="credits" placeholder="So tin chi" />
+            </div>
+            <div class="toolbar">
+                <input class="input-text" data-field="major" placeholder="Chuyen nganh" />
+                <input class="input-text" data-field="class" placeholder="Lop" />
+                <input class="input-text" data-field="note" placeholder="Ghi chu" />
+            </div>
+            <div class="toolbar">
+                <button class="btn" type="button" data-action="save">Luu hoc phan</button>
+                <button class="btn secondary" type="button" data-action="cancel">Huy</button>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h3>Danh sach hoc phan bat buoc</h3>
+            <table class="portal-table" id="edu-required-table" data-columns="code,name,credits,major,class,note">
+                <thead>
+                    <tr>
+                        <th>Ma hoc phan</th>
+                        <th>Ten hoc phan</th>
+                        <th>So tin chi</th>
+                        <th>Chuyen nganh</th>
+                        <th>Lop</th>
+                        <th>Ghi chu</th>
+                        <th>Hanh dong</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-major="DC" data-class="K58">
+                        <td>IT101</td>
+                        <td>Nhap mon lap trinh</td>
+                        <td>3</td>
+                        <td>Dai cuong</td>
+                        <td>K58</td>
+                        <td>Ap dung dai cuong</td>
+                        <td>
+                            <button class="btn secondary" type="button" data-edit>Sua</button>
+                            <button class="btn secondary" type="button" data-delete>Xoa</button>
+                        </td>
+                    </tr>
+                    <tr data-major="HTTT" data-class="K59">
+                        <td>HT101</td>
+                        <td>Nhap mon he thong thong tin</td>
+                        <td>3</td>
+                        <td>HTTT</td>
+                        <td>K59</td>
+                        <td>Bat buoc truoc chuyen nganh</td>
+                        <td>
+                            <button class="btn secondary" type="button" data-edit>Sua</button>
+                            <button class="btn secondary" type="button" data-delete>Xoa</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/education-crud.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Biểu phí";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_AdminNav")
+    <section class="portal-content">
+        <h1>Biểu phí</h1>
+        <p>Thiết lập mức học phí theo chương trình, học kỳ và đối tượng.</p>
+
+        <div class="toolbar">
+            <button class="btn" type="button">Thêm biểu phí</button>
+            <button class="btn secondary" type="button">Nhập từ Excel</button>
+        </div>
+
+        <table class="portal-table">
+            <thead>
+                <tr>
+                    <th>Mã biểu phí</th>
+                    <th>Tên biểu phí</th>
+                    <th>Học kỳ</th>
+                    <th>Mức thu</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>HP2025_HK1</td>
+                    <td>Học phí HK1 2025-2026</td>
+                    <td>HK1</td>
+                    <td>12.000.000đ</td>
+                    <td><span class="badge ok">Hiệu lực</span></td>
+                </tr>
+                <tr>
+                    <td>HP2025_HK2</td>
+                    <td>Học phí HK2 2025-2026</td>
+                    <td>HK2</td>
+                    <td>11.500.000đ</td>
+                    <td><span class="badge warn">Nháp</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

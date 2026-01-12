@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Báo cáo";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_AdminNav")
+    <section class="portal-content">
+        <h1>Báo cáo</h1>
+        <p>Tổng hợp báo cáo doanh thu, công nợ và lịch sử giao dịch.</p>
+
+        <div class="toolbar">
+            <a class="btn" href="#doanh-thu">Báo cáo doanh thu</a>
+            <a class="btn secondary" href="#cong-no">Báo cáo công nợ</a>
+            <a class="btn secondary" href="#lich-su">Lịch sử giao dịch</a>
+        </div>
+
+        <div class="section-block" id="doanh-thu">
+            <h3>Báo cáo doanh thu</h3>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Ngày</th>
+                        <th>Tổng thu</th>
+                        <th>Số giao dịch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>10/01/2026</td>
+                        <td>350.000.000đ</td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td>11/01/2026</td>
+                        <td>420.000.000đ</td>
+                        <td>145</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-block" id="cong-no">
+            <h3>Báo cáo công nợ</h3>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Khoa</th>
+                        <th>Tổng phải thu</th>
+                        <th>Đã thu</th>
+                        <th>Còn nợ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CNTT</td>
+                        <td>2,5 tỷ</td>
+                        <td>1,9 tỷ</td>
+                        <td>0,6 tỷ</td>
+                    </tr>
+                    <tr>
+                        <td>Cơ khí</td>
+                        <td>1,8 tỷ</td>
+                        <td>1,4 tỷ</td>
+                        <td>0,4 tỷ</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-block" id="lich-su">
+            <h3>Lịch sử giao dịch</h3>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Mã giao dịch</th>
+                        <th>Sinh viên</th>
+                        <th>Số tiền</th>
+                        <th>Phương thức</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GD20260110_001</td>
+                        <td>SV001</td>
+                        <td>3.000.000đ</td>
+                        <td>VNPay</td>
+                        <td><span class="badge ok">Thành công</span></td>
+                    </tr>
+                    <tr>
+                        <td>GD20260110_002</td>
+                        <td>SV002</td>
+                        <td>2.500.000đ</td>
+                        <td>MoMo</td>
+                        <td><span class="badge warn">Chờ xác nhận</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>

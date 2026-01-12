@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+}
+
+<section class="hero">
+    <div class="hero-slider" id="hero-slider">
+        <div class="hero-overlay">
+            <div class="hero-copy">
+                <p class="hero-kicker">Cổng dịch vụ tài chính</p>
+                <h1>Minh bạch, chính xác, nhanh chóng</h1>
+                <p>Quản lý công nợ, thanh toán đa kênh, tự động đối soát và báo cáo theo thời gian thực.</p>
+                <div class="hero-actions">
+                    <a class="hero-btn" asp-controller="Home" asp-action="DangNhap">Đăng nhập</a>
+                    <a class="hero-btn ghost" asp-controller="Home" asp-action="LienHe">Liên hệ</a>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div>
+                    <h3>24/7</h3>
+                    <p>Vận hành ổn định</p>
+                </div>
+                <div>
+                    <h3>100%</h3>
+                    <p>Tính học phí tự động</p>
+                </div>
+                <div>
+                    <h3>5s</h3>
+                    <p>Đối soát nhanh</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="info-section">
+    <div class="section-head">
+        <h2>Thông tin hệ thống</h2>
+        <p>Giải pháp tập trung cho Phòng Tài chính và người học.</p>
+    </div>
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Ứng dụng web</h3>
+            <p>Nền tảng API-first, tích hợp thanh toán, gửi biên lai điện tử và theo dõi công nợ tự động.</p>
+        </div>
+        <div class="info-card">
+            <h3>Học viện Kỹ thuật Quân sự</h3>
+            <p>Đào tạo nguồn nhân lực chất lượng cao, phục vụ quốc phòng và phát triển công nghệ quốc gia.</p>
+        </div>
+        <div class="info-card">
+            <h3>Bảo mật &amp; minh bạch</h3>
+            <p>Phân quyền chặt chẽ, mã hóa dữ liệu nhạy cảm, báo cáo real-time hỗ trợ lãnh đạo.</p>
+        </div>
+    </div>
+</section>
+
+<section class="detail-section">
+    <div class="detail-card">
+        <h3>Chức năng nổi bật</h3>
+        <ul>
+            <li>Thiết lập biểu phí linh hoạt theo học kỳ, chương trình.</li>
+            <li>Thông báo học phí, danh sách sinh viên nhận thông báo.</li>
+            <li>Miễn giảm, học bổng tự động cập nhật công nợ.</li>
+            <li>Đối soát giao dịch, nhật ký hệ thống và báo cáo.</li>
+        </ul>
+    </div>
+    <div class="detail-card">
+        <h3>Hỗ trợ sinh viên</h3>
+        <ul>
+            <li>Tra cứu công nợ, lịch sử thanh toán.</li>
+            <li>Thanh toán trực tuyến hoặc tại quầy.</li>
+            <li>Nhận biên lai điện tử và thông báo hạn nộp.</li>
+        </ul>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/home.js" asp-append-version="true"></script>
+}

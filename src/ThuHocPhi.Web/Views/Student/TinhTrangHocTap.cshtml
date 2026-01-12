@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Tình trạng học tập";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_StudentNav")
+    <section class="portal-content">
+        <h1>Tình trạng học tập</h1>
+        <p>Theo dõi kết quả học tập chi tiết theo từng học kỳ.</p>
+
+        <div class="card-grid">
+            <div class="stat-card">
+                <h4>Điểm TBC tích lũy</h4>
+                <div class="value">3.12/4.0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Tín chỉ tích lũy</h4>
+                <div class="value">82/150</div>
+            </div>
+            <div class="stat-card">
+                <h4>Trạng thái</h4>
+                <div class="value">Đang học</div>
+                <span class="badge ok">Đạt yêu cầu</span>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h3>Học kỳ 1 - 2025/2026</h3>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Học phần</th>
+                        <th>Số TC</th>
+                        <th>Điểm giữa kỳ</th>
+                        <th>Điểm cuối kỳ</th>
+                        <th>Điểm TB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nhập môn lập trình</td>
+                        <td>3</td>
+                        <td>8.0</td>
+                        <td>8.5</td>
+                        <td>8.3</td>
+                    </tr>
+                    <tr>
+                        <td>Giải tích 2</td>
+                        <td>4</td>
+                        <td>7.0</td>
+                        <td>7.5</td>
+                        <td>7.3</td>
+                    </tr>
+                    <tr>
+                        <td>Vật lý đại cương</td>
+                        <td>4</td>
+                        <td>6.5</td>
+                        <td>6.0</td>
+                        <td>6.2</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="note">Điểm trung bình học kỳ: <strong>7.3</strong></p>
+        </div>
+
+        <div class="section-block">
+            <h3>Học kỳ 2 - 2024/2025</h3>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Học phần</th>
+                        <th>Số TC</th>
+                        <th>Điểm giữa kỳ</th>
+                        <th>Điểm cuối kỳ</th>
+                        <th>Điểm TB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cơ sở dữ liệu</td>
+                        <td>3</td>
+                        <td>8.2</td>
+                        <td>8.6</td>
+                        <td>8.4</td>
+                    </tr>
+                    <tr>
+                        <td>Toán rời rạc</td>
+                        <td>3</td>
+                        <td>7.6</td>
+                        <td>7.8</td>
+                        <td>7.7</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="note">Điểm trung bình học kỳ: <strong>8.05</strong></p>
+        </div>
+    </section>
+</div>

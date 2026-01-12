@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Dashboard quản trị";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_AdminNav")
+    <section class="portal-content">
+        <h1>Dashboard quản trị</h1>
+        <p>Tổng quan tình hình thu học phí và trạng thái vận hành hệ thống.</p>
+
+        <div class="card-grid">
+            <div class="stat-card">
+                <h4>Tổng thu tháng</h4>
+                <div class="value">8,2 tỷ</div>
+                <span class="tag">+12% so với tháng trước</span>
+            </div>
+            <div class="stat-card">
+                <h4>Công nợ còn lại</h4>
+                <div class="value">3,5 tỷ</div>
+                <span class="badge warn">Cần xử lý</span>
+            </div>
+            <div class="stat-card">
+                <h4>Giao dịch chờ đối soát</h4>
+                <div class="value">45</div>
+                <span class="badge warn">Chờ xác nhận</span>
+            </div>
+            <div class="stat-card">
+                <h4>Thông báo học phí</h4>
+                <div class="value">12</div>
+                <span class="badge ok">Đã phát hành</span>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h3>Việc cần làm</h3>
+            <ul>
+                <li>Đối soát giao dịch ngày hôm qua với ngân hàng.</li>
+                <li>Phê duyệt danh sách miễn giảm học phí cho sinh viên.</li>
+                <li>Xuất báo cáo công nợ theo khoa.</li>
+            </ul>
+        </div>
+    </section>
+</div>

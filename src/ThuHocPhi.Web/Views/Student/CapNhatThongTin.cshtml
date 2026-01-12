@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Cập nhật thông tin";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_StudentNav")
+    <section class="portal-content">
+        <h1>Cập nhật thông tin</h1>
+        <p>Cập nhật thông tin liên hệ để nhận thông báo học phí.</p>
+
+        <div class="section-block">
+            <div class="toolbar">
+                <input class="input-text" placeholder="Email" />
+                <input class="input-text" placeholder="Số điện thoại" />
+            </div>
+            <div class="toolbar">
+                <input class="input-text" placeholder="Địa chỉ" />
+                <button class="btn" type="button">Lưu thay đổi</button>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <a class="btn secondary" asp-controller="Student" asp-action="ThongTinSinhVien">Quay lại hồ sơ</a>
+        </div>
+    </section>
+</div>

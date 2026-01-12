@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Cổng sinh viên";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_StudentNav")
+    <section class="portal-content">
+        <h1>Cổng sinh viên</h1>
+        <p>Quản lý đăng ký tín chỉ, theo dõi học tập và thanh toán học phí tập trung.</p>
+
+        <div class="card-grid">
+            <div class="stat-card">
+                <h4>Học kỳ hiện tại</h4>
+                <div class="value">HK1 - 2025/2026</div>
+                <span class="tag">Đang mở</span>
+            </div>
+            <div class="stat-card">
+                <h4>Công nợ học phí</h4>
+                <div class="value">12.500.000đ</div>
+                <span class="badge warn">Chưa thanh toán</span>
+            </div>
+            <div class="stat-card">
+                <h4>Tín chỉ đã đăng ký</h4>
+                <div class="value">18</div>
+                <span class="tag">Đã xác nhận</span>
+            </div>
+            <div class="stat-card">
+                <h4>Đăng ký thi</h4>
+                <div class="value">Chưa mở</div>
+                <span class="badge danger">Chưa đủ điều kiện</span>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h3>Truy cập nhanh</h3>
+            <div class="toolbar">
+                <a class="btn" asp-controller="Student" asp-action="DangKyTinChi">Đăng ký học phần</a>
+                <a class="btn secondary" asp-controller="Student" asp-action="HocPhi">Thanh toán học phí</a>
+                <a class="btn secondary" asp-controller="Student" asp-action="TinhTrangHocTap">Tiến trình học tập</a>
+                <a class="btn secondary" asp-controller="Student" asp-action="ThongTinSinhVien">Hồ sơ sinh viên</a>
+            </div>
+            <p>Hoàn tất học phí trước khi đăng ký thi kết thúc môn.</p>
+        </div>
+    </section>
+</div>

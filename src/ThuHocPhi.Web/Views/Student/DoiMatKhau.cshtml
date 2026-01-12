@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Đổi mật khẩu";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_StudentNav")
+    <section class="portal-content">
+        <h1>Đổi mật khẩu</h1>
+        <p>Thiết lập mật khẩu mới để bảo vệ tài khoản.</p>
+
+        <div class="section-block">
+            <div class="toolbar">
+                <input class="input-text" type="password" placeholder="Mật khẩu hiện tại" />
+                <input class="input-text" type="password" placeholder="Mật khẩu mới" />
+            </div>
+            <div class="toolbar">
+                <input class="input-text" type="password" placeholder="Nhập lại mật khẩu mới" />
+                <button class="btn" type="button">Cập nhật mật khẩu</button>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <a class="btn secondary" asp-controller="Student" asp-action="ThongTinSinhVien">Quay lại hồ sơ</a>
+        </div>
+    </section>
+</div>

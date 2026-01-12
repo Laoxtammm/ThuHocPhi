@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hệ thống thu học phí</title>
+    <link rel="stylesheet" href="/app/app.css" />
+  </head>
+  <body>
+    <div class="bg-orbit"></div>
+    <div class="bg-grid"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <img style="width: 5%;" src="/pictures/Logo_MTA_new.png" alt="Logo MTA" />
+        <div>
+          <p class="brand-title">Học viện kỹ thuật quân sự -</p>
+          <p class="brand-sub">Hệ thống quản lý thu học phí</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="/" class="nav-link">Trang chủ</a>
+        <a href="/app/contact.html" class="nav-link">Liên hệ</a>
+        <button class="nav-btn" id="nav-login" type="button">Đăng nhập</button>
+        <button class="nav-btn ghost" id="nav-register" type="button">Đăng ký</button>
+        <button class="nav-btn" id="nav-app" type="button">Hệ thống</button>
+        <button class="nav-btn accent" id="logout-btn" type="button">Đăng xuất</button>
+        <span class="nav-user" id="user-chip"></span>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="hero-slider" id="hero-slider">
+          <div class="hero-overlay">
+            <div class="hero-copy">
+              <p class="hero-kicker">Cổng dịch vụ tài chính sinh viên</p>
+              <h1>Minh bạch, chính xác, nhanh chóng</h1>
+              <p>
+                Quản lý công nợ, thanh toán đa kênh, tự động đối soát và báo cáo
+                theo thời gian thực.
+              </p>
+              <div class="hero-actions">
+                <button class="nav-btn accent" id="hero-login" type="button">Đăng nhập</button>
+                <a class="nav-btn ghost" href="/app/contact.html">Liên hệ</a>
+              </div>
+            </div>
+            <div class="hero-stats">
+              <div>
+                <h3>24/7</h3>
+                <p>Vận hành ổn định</p>
+              </div>
+              <div>
+                <h3>100%</h3>
+                <p>Tính học phí tự động</p>
+              </div>
+              <div>
+                <h3>5s</h3>
+                <p>Đối soát nhanh</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="info-section">
+        <div class="section-head">
+          <h2>Thông tin hệ thống</h2>
+          <p>Giải pháp tập trung cho Phòng Tài chính và người học.</p>
+        </div>
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>Ứng dụng web</h3>
+            <p>
+              Nền tảng API-first, tích hợp thanh toán, gửi biên lai điện tử và
+              theo dõi công nợ tự động.
+            </p>
+          </div>
+          <div class="info-card">
+            <h3>Học viện Kỹ thuật Quân sự</h3>
+            <p>
+              Đào tạo nguồn nhân lực chất lượng cao, phục vụ quốc phòng và phát
+              triển công nghệ quốc gia.
+            </p>
+          </div>
+          <div class="info-card">
+            <h3>Bảo mật &amp; minh bạch</h3>
+            <p>
+              Phân quyền chặt chẽ, mã hóa dữ liệu nhạy cảm, báo cáo real-time hỗ
+              trợ lãnh đạo.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <div class="detail-card">
+          <h3>Chức năng nổi bật</h3>
+          <ul>
+            <li>Thiết lập biểu phí linh hoạt theo học kỳ, chương trình.</li>
+            <li>Thông báo học phí, danh sách sinh viên nhận thông báo.</li>
+            <li>Miễn giảm, học bổng tự động cập nhật công nợ.</li>
+            <li>Đối soát giao dịch, nhật ký hệ thống và báo cáo.</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h3>Hỗ trợ sinh viên</h3>
+          <ul>
+            <li>Tra cứu công nợ, lịch sử thanh toán.</li>
+            <li>Thanh toán trực tuyến hoặc tại quầy.</li>
+            <li>Nhận biên lai điện tử và thông báo hạn nộp.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="contact" class="contact-section">
+        <div class="section-head">
+          <h2>Liên hệ</h2>
+          <p>Phòng Tài chính - Học viện Kỹ thuật Quân sự</p>
+        </div>
+        <div class="contact-grid">
+          <div>
+            <p>Phòng tài chính: Tầng 1, toàn nhà S4</p>
+            <p>Địa chỉ: 236 Hoàng Quốc Việt, Nghĩa Đô, Hà Nội</p>
+            <p>Tel: (+84) 069.515200</p>
+            <p>Email: info@mta.edu.vn</p>
+          </div>
+          <div>
+            <p>Website: <a href="https://mta.edu.vn">https://mta.edu.vn</a></p>
+            <p>Giờ làm việc: 08:00 - 17:00 (Thứ 2 - Thứ 6)</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="login-section" class="login-view hidden">
+        <div class="login-card">
+          <div class="login-header">
+            <img src="/pictures/Logo_MTA_new.png" alt="Logo MTA" />
+            <div>
+              <h1>Đăng nhập hệ thống</h1>
+              <p>Sử dụng tài khoản cán bộ hoặc sinh viên để truy cập.</p>
+            </div>
+          </div>
+          <form id="login-form">
+            <label>
+              Tên đăng nhập
+              <input type="text" name="username" required />
+            </label>
+            <label>
+              Mật khẩu
+              <input type="password" name="password" required />
+            </label>
+            <button class="btn primary" type="submit">Đăng nhập</button>
+            <div class="note" id="login-note"></div>
+          </form>
+        </div>
+      </section>
+
+      <section id="register-section" class="register-view hidden">
+        <div class="login-card">
+          <h1>Đăng ký</h1>
+          <p>Vui lòng liên hệ quản trị hệ thống để được cấp tài khoản.</p>
+        </div>
+      </section>
+
+      <section id="app-section" class="app-section hidden">
+        <div class="layout" id="app-view">
+          <nav class="sidebar">
+            <a href="#dashboard">Tổng quan</a>
+            <a href="#bieu-phi">Biểu phí</a>
+            <a href="#cong-no">Công nợ</a>
+            <a href="#thanh-toan">Thanh toán</a>
+            <a href="#thong-bao">Thông báo học phí</a>
+            <a href="#mien-giam">Miễn giảm</a>
+            <a href="#hoc-bong">Học bổng</a>
+            <a href="#doi-soat">Đối soát</a>
+            <a href="#quan-tri">Quản trị người dùng</a>
+          </nav>
+
+          <main class="content">
+            <section class="panel" id="dashboard">
+              <div class="panel-head">
+                <h2>Dashboard</h2>
+                <button class="btn ghost" id="refresh-profile">Lấy thông tin</button>
+              </div>
+              <div class="grid two">
+                <div class="card">
+                  <h3>Hồ sơ người dùng</h3>
+                  <pre id="profile-output">Chưa có dữ liệu</pre>
+                </div>
+                <div class="card">
+                  <h3>Hướng dẫn nhanh</h3>
+                  <p>Truy cập các module ở menu trái hoặc Swagger tại /swagger.</p>
+                  <div class="tag-row">
+                    <span class="tag">API JWT</span>
+                    <span class="tag">EF Core</span>
+                    <span class="tag">SQL Server</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel" id="bieu-phi">
+              <div class="panel-head">
+                <h2>Biểu phí</h2>
+                <button class="btn ghost" id="bieu-phi-refresh">Tải danh sách</button>
+              </div>
+              <div class="grid two">
+                <form class="card" id="bieu-phi-form">
+                  <h3>Tạo biểu phí</h3>
+                  <label>Mã loại phí <input name="maLoaiPhi" required /></label>
+                  <label>Mã học kỳ <input name="maHocKy" required /></label>
+                  <label>Hệ đào tạo <input name="heDaoTao" /></label>
+                  <label>Loại hình đào tạo <input name="loaiHinhDaoTao" /></label>
+                  <label>Đơn giá <input name="donGia" type="number" step="0.01" required /></label>
+                  <label>Ngày áp dụng <input name="ngayApDung" type="date" required /></label>
+                  <label>Ghi chú <input name="ghiChu" /></label>
+                  <button class="btn primary" type="submit">Lưu biểu phí</button>
+                  <div class="note" id="bieu-phi-note"></div>
+                </form>
+                <div class="card table-card">
+                  <h3>Danh sách biểu phí</h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Loại</th>
+                        <th>Học kỳ</th>
+                        <th>Đơn giá</th>
+                        <th>Trạng thái</th>
+                      </tr>
+                    </thead>
+                    <tbody id="bieu-phi-table"></tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel" id="cong-no">
+              <div class="panel-head">
+                <h2>Công nợ</h2>
+              </div>
+              <div class="grid two">
+                <form class="card" id="cong-no-form">
+                  <h3>Tra cứu công nợ</h3>
+                  <label>Mã sinh viên <input name="maSv" required /></label>
+                  <label>Mã học kỳ <input name="maHocKy" required /></label>
+                  <div class="row">
+                    <button class="btn ghost" id="cong-no-tinh" type="button">Tính công nợ</button>
+                    <button class="btn primary" type="submit">Tra cứu</button>
+                  </div>
+                  <div class="note" id="cong-no-note"></div>
+                </form>
+                <div class="card">
+                  <h3>Chi tiết công nợ</h3>
+                  <pre id="cong-no-output">Chưa có dữ liệu</pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel" id="thanh-toan">
+              <div class="panel-head">
+                <h2>Thanh toán</h2>
+                <button class="btn ghost" id="giao-dich-refresh">Tải giao dịch</button>
+              </div>
+              <div class="grid two">
+                <form class="card" id="thanh-toan-form">
+                  <h3>Thanh toán học phí</h3>
+                  <label>Mã sinh viên <input name="maSv" required /></label>
+                  <label>Mã học kỳ <input name="maHocKy" required /></label>
+                  <label>Số tiền <input name="soTien" type="number" step="0.01" required /></label>
+                  <label>Mã phương thức <input name="maPhuongThuc" required /></label>
+                  <label>Mã GD ngân hàng <input name="maGiaoDichNganHang" /></label>
+                  <label>Người thu tiền (ID) <input name="nguoiThuTien" type="number" /></label>
+                  <button class="btn primary" type="submit">Thanh toán</button>
+                  <div class="note" id="thanh-toan-note"></div>
+                </form>
+                <div class="card table-card">
+                  <h3>Lịch sử giao dịch</h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Mã GD</th>
+                        <th>Số tiền</th>
+                        <th>Phương thức</th>
+                        <th>Trạng thái</th>
+                      </tr>
+                    </thead>
+                    <tbody id="giao-dich-table"></tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel" id="thong-bao">
+              <div class="panel-head">
+                <h2>Thông báo học phí</h2>
+                <button class="btn ghost" id="thong-bao-refresh">Tải thông báo</button>
+              </div>
+              <div class="grid two">
+                <form class="card" id="thong-bao-form">
+                  <h3>Tạo thông báo</h3>
+                  <label>Mã học kỳ <input name="maHocKy" required /></label>
+                  <label>Năm học <input name="namHoc" /></label>
+                  <label>Tiêu đề <input name="tieuDe" required /></label>
+                  <label>Nội dung <textarea name="noiDung"></textarea></label>
+                  <label>Hạn nộp <input name="hanNop" type="date" /></label>
+                  <label>Đối tượng áp dụng <input name="doiTuongApDung" /></label>
+                  <button class="btn primary" type="submit">Phát hành</button>
+                  <div class="note" id="thong-bao-note"></div>
+                </form>
+                <div class="card">
+                  <h3>Gán danh sách sinh viên</h3>
+                  <label>Mã thông báo <input id="tb-id" /></label>
+                  <label>Danh sách Mã SV (phẩy) <textarea id="tb-sv"></textarea></label>
+                  <button class="btn ghost" id="tb-assign" type="button">Gán danh sách</button>
+                  <div class="note" id="tb-assign-note"></div>
+                  <div class="divider"></div>
+                  <h4>Danh sách thông báo</h4>
+                  <pre id="thong-bao-output">Chưa có dữ liệu</pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel" id="mien-giam">
+              <div class="panel-head">
+                <h2>Miễn giảm</h2>
+              </div>
+              <div class="grid two">
+                <form class="card" id="mien-giam-form">
+                  <h3>Tạo chính sách</h3>
+                  <label>Mã chính sách <input name="maChinhSach" required /></label>
+                  <label>Tên chính sách <input name="tenChinhSach" required /></label>
+                  <label>Loại (Phần trăm / Tiền) <input name="loaiMienGiam" required /></label>
+                  <label>Giá trị <input name="giaTriMienGiam" type="number" step="0.01" required /></label>
+                  <button class="btn primary" type="submit">Lưu chính sách</button>
+                  <div class="note" id="mien-giam-note"></div>
+                </form>
+                <form class="card" id="mien-giam-apply-form">
+                  <h3>Áp dụng miễn giảm</h3>
+                  <label>Mã sinh viên <input name="maSv" required /></label>
+                  <label>Mã chính sách <input name="maChinhSach" required /></label>
+                  <label>Mã học kỳ <input name="maHocKy" required /></label>
+                  <button class="btn ghost" type="submit">Áp dụng</button>
+                  <div class="note" id="mien-giam-apply-note"></div>
+                </form>
+              </div>
+            </section>
+
+            <section class="panel" id="hoc-bong">
+              <div class="panel-head">
+                <h2>Học bổng</h2>
+              </div>
+              <div class="grid two">
+                <form class="card" id="hoc-bong-form">
+                  <h3>Tạo học bổng</h3>
+                  <label>Mã học bổng <input name="maHocBong" required /></label>
+                  <label>Tên học bổng <input name="tenHocBong" required /></label>
+                  <label>Loại (Phần trăm / Tiền) <input name="loaiGiaTri" required /></label>
+                  <label>Giá trị <input name="giaTri" type="number" step="0.01" required /></label>
+                  <button class="btn primary" type="submit">Lưu học bổng</button>
+                  <div class="note" id="hoc-bong-note"></div>
+                </form>
+                <form class="card" id="hoc-bong-apply-form">
+                  <h3>Áp dụng học bổng</h3>
+                  <label>Mã sinh viên <input name="maSv" required /></label>
+                  <label>Mã học bổng <input name="maHocBong" required /></label>
+                  <label>Mã học kỳ <input name="maHocKy" required /></label>
+                  <button class="btn ghost" type="submit">Áp dụng</button>
+                  <div class="note" id="hoc-bong-apply-note"></div>
+                </form>
+              </div>
+            </section>
+
+            <section class="panel" id="doi-soat">
+              <div class="panel-head">
+                <h2>Đối soát giao dịch</h2>
+              </div>
+              <div class="grid two">
+                <form class="card" id="doi-soat-form">
+                  <h3>Nhập dữ liệu ngân hàng</h3>
+                  <label>Từ ngày <input name="tuNgay" type="date" /></label>
+                  <label>Đến ngày <input name="denNgay" type="date" /></label>
+                  <label>JSON danh sách giao dịch</label>
+                  <textarea name="giaoDichJson">[{"maGiaoDichNganHang":"MB_TRANS_009988","soTien":1000000,"ngayGiaoDich":"2025-10-10"}]</textarea>
+                  <button class="btn primary" type="submit">Đối soát</button>
+                  <div class="note" id="doi-soat-note"></div>
+                </form>
+                <div class="card">
+                  <h3>Kết quả đối soát</h3>
+                  <pre id="doi-soat-output">Chưa có dữ liệu</pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel" id="quan-tri">
+              <div class="panel-head">
+                <h2>Quản trị người dùng</h2>
+                <button class="btn ghost" id="nguoi-dung-refresh">Tải danh sách</button>
+              </div>
+              <div class="grid two">
+                <form class="card" id="nguoi-dung-form">
+                  <h3>Tạo người dùng</h3>
+                  <label>Tên đăng nhập <input name="tenDangNhap" required /></label>
+                  <label>Họ tên <input name="hoTen" required /></label>
+                  <label>Mật khẩu <input name="matKhau" type="password" required /></label>
+                  <label>Email <input name="email" type="email" /></label>
+                  <button class="btn primary" type="submit">Tạo người dùng</button>
+                  <div class="note" id="nguoi-dung-note"></div>
+                </form>
+                <div class="card">
+                  <h3>Cập nhật vai trò</h3>
+                  <label>Mã người dùng <input id="role-user-id" type="number" /></label>
+                  <label>Danh sách Mã Vai trò (phẩy) <input id="role-ids" /></label>
+                  <button class="btn ghost" id="role-update" type="button">Cập nhật vai trò</button>
+                  <div class="note" id="role-note"></div>
+                  <div class="divider"></div>
+                  <h4>Danh sách người dùng</h4>
+                  <pre id="nguoi-dung-output">Chưa có dữ liệu</pre>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app/app.js"></script>
+  </body>
+</html>

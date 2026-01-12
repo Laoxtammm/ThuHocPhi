@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Đối soát giao dịch";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_AdminNav")
+    <section class="portal-content">
+        <h1>Đối soát giao dịch</h1>
+        <p>Đối chiếu dữ liệu thanh toán với ngân hàng/cổng thanh toán.</p>
+
+        <div class="section-block">
+            <h3>Thông tin đối soát</h3>
+            <div class="toolbar">
+                <input type="date" id="doi-soat-tu-ngay" class="input-text" />
+                <input type="date" id="doi-soat-den-ngay" class="input-text" />
+                <input type="text" id="doi-soat-nguon" class="input-text" placeholder="Nguồn dữ liệu (VNPay, MoMo...)" />
+            </div>
+
+            <h3>Danh sách giao dịch ngân hàng</h3>
+            <table class="portal-table" id="doi-soat-table">
+                <thead>
+                    <tr>
+                        <th>Mã giao dịch</th>
+                        <th>Số tiền</th>
+                        <th>Ngày giao dịch</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" placeholder="GD2026_001" class="input-text" /></td>
+                        <td><input type="number" min="0" step="0.01" placeholder="3000000" class="input-text" /></td>
+                        <td><input type="date" class="input-text" /></td>
+                        <td><button type="button" class="btn secondary btn-remove">Xóa</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="toolbar">
+                <button class="btn secondary" type="button" id="btn-add-row">Thêm dòng</button>
+                <button class="btn" type="button" id="btn-doi-soat">Thực hiện đối soát</button>
+            </div>
+
+            <div class="section-block" id="doi-soat-result" style="display: none;">
+                <h3>Kết quả đối soát</h3>
+                <pre class="portal-result" id="doi-soat-output"></pre>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin-doi-soat.js" asp-append-version="true"></script>
+}

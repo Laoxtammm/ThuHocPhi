@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Liên hệ - Học viện kỹ thuật quân sự</title>
+    <link rel="stylesheet" href="/app/app.css" />
+  </head>
+  <body>
+    <div class="bg-orbit"></div>
+    <div class="bg-grid"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <img style="width: 5%;" src="/pictures/Logo_MTA_new.png" alt="Logo MTA" />
+        <div>
+          <p class="brand-title">Học viện kỹ thuật quân sự -</p>
+          <p class="brand-sub">Hệ thống quản lý thu học phí</p>
+        </div>
+      </div>
+      <nav class="nav" id="contact-nav">
+        <a href="/" class="nav-link">Trang chủ</a>
+        <span class="nav-link">Liên hệ</span>
+        <a class="nav-btn" href="/#login" id="nav-login">Đăng nhập</a>
+        <a class="nav-btn ghost" href="/#register" id="nav-register">Đăng ký</a>
+        <a class="nav-btn" href="/#app" id="nav-app">Hệ thống</a>
+        <button class="nav-btn accent" id="logout-btn" type="button">Đăng xuất</button>
+        <span class="nav-user" id="user-chip"></span>
+      </nav>
+    </header>
+
+    <main>
+      <section class="contact-section">
+        <div class="section-head">
+          <h2>Liên hệ</h2>
+          <p>Phòng Tài chính - Học viện Kỹ thuật Quân sự</p>
+        </div>
+        <div class="contact-grid">
+          <div>
+            <p>Phòng tài chính: Tầng 1, toàn nhà S4</p>
+            <p>Địa chỉ: 236 Hoàng Quốc Việt, Nghĩa Đô, Hà Nội</p>
+            <p>Tel: (+84) 069.515200</p>
+            <p>Email: info@mta.edu.vn</p>
+          </div>
+          <div>
+            <p>Website: <a href="https://mta.edu.vn">https://mta.edu.vn</a></p>
+            <p>Giờ làm việc: 08:00 - 17:00 (Thứ 2 - Thứ 6)</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const token = localStorage.getItem("thuhocphi_token");
+      const navLogin = document.getElementById("nav-login");
+      const navRegister = document.getElementById("nav-register");
+      const navApp = document.getElementById("nav-app");
+      const logoutBtn = document.getElementById("logout-btn");
+      const userChip = document.getElementById("user-chip");
+
+      if (token) {
+        navLogin.classList.add("hidden");
+        navRegister.classList.add("hidden");
+        navApp.classList.remove("hidden");
+        logoutBtn.classList.remove("hidden");
+        userChip.textContent = "Da dang nhap";
+      } else {
+        navApp.classList.add("hidden");
+        logoutBtn.classList.add("hidden");
+      }
+
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("thuhocphi_token");
+        window.location.href = "/";
+      });
+    </script>
+  </body>
+</html>

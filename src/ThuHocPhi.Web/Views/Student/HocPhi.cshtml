@@ -1,0 +1,75 @@
+@{
+    ViewData["Title"] = "Cong no hoc phi";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_StudentNav")
+    <section class="portal-content">
+        <h1>Cong no hoc phi</h1>
+        <p>Theo doi cong no va lich su thanh toan hoc phi.</p>
+
+        <div class="card-grid">
+            <div class="stat-card">
+                <h4>Tong phai thu</h4>
+                <div class="value" id="fee-total">18.500.000d</div>
+            </div>
+            <div class="stat-card">
+                <h4>Da thanh toan</h4>
+                <div class="value" id="fee-paid">6.000.000d</div>
+            </div>
+            <div class="stat-card">
+                <h4>Con no</h4>
+                <div class="value" id="fee-remaining">12.500.000d</div>
+                <span class="badge warn" id="fee-remaining-badge">Con no</span>
+            </div>
+        </div>
+
+        <table class="portal-table" data-fee-table>
+            <thead>
+                <tr>
+                    <th>Khoan thu</th>
+                    <th>Hoc ky</th>
+                    <th>So tien</th>
+                    <th>Trang thai</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-name="Hoc phi HK1" data-term="HK1 - 2025/2026" data-amount="12000000">
+                    <td>Hoc phi HK1</td>
+                    <td>HK1 - 2025/2026</td>
+                    <td>12.000.000d</td>
+                    <td><span class="badge warn" data-status>Chua thanh toan</span></td>
+                </tr>
+                <tr data-name="Le phi dich vu" data-term="HK1 - 2025/2026" data-amount="500000">
+                    <td>Le phi dich vu</td>
+                    <td>HK1 - 2025/2026</td>
+                    <td>500.000d</td>
+                    <td><span class="badge warn" data-status>Chua thanh toan</span></td>
+                </tr>
+                <tr data-name="Hoc phi HK2" data-term="HK2 - 2024/2025" data-amount="6000000" data-default="paid">
+                    <td>Hoc phi HK2</td>
+                    <td>HK2 - 2024/2025</td>
+                    <td>6.000.000d</td>
+                    <td><span class="badge ok" data-status>Da thanh toan</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-block">
+            <h3>Dieu kien dang ky thi</h3>
+            <p>Vui long hoan tat hoc phi de duoc dang ky thi ket thuc mon.</p>
+            <div class="toolbar">
+                <a class="btn" asp-controller="Student" asp-action="ThanhToanHocPhi">Thanh toan hoc phi</a>
+                <button class="btn secondary disabled" type="button">Dang ky thi ket thuc mon</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/student-fee.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,73 @@
+@{
+    ViewData["Title"] = "Ke toan - Hoc bong";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_AccountingNav")
+    <section class="portal-content">
+        <h1>Thuc hien hoc bong</h1>
+        <p>Hoc bong duoc duyet tu admin va ke toan thuc hien cap nhat cong no.</p>
+
+        <div class="section-block">
+            <h3>Bang hoc bong</h3>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Loai hoc bong</th>
+                        <th>Dieu kien</th>
+                        <th>Gia tri</th>
+                        <th>Ghi chu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A</td>
+                        <td>Diem TB hoc ky >= 8, TB cac mon >= 7</td>
+                        <td>750.000d</td>
+                        <td>Khuyen khich hoc tap</td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td>Diem TB hoc ky >= 8.5, TB cac mon >= 7</td>
+                        <td>1.500.000d</td>
+                        <td>Khuyen khich hoc tap</td>
+                    </tr>
+                    <tr>
+                        <td>Le Quy Don</td>
+                        <td>Diem TB hoc ky >= 9, TB cac mon >= 7</td>
+                        <td>10.000.000d</td>
+                        <td>Hoc bong danh du</td>
+                    </tr>
+                    <tr>
+                        <td>Giam hoc phi (%)</td>
+                        <td>Theo chinh sach tung khoa</td>
+                        <td>10% - 50%</td>
+                        <td>Ap dung theo quyet dinh</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-block">
+            <h3>Xac nhan hoc bong</h3>
+            <div class="toolbar">
+                <input class="input-text" id="hb-ma-sv" placeholder="Ma sinh vien" />
+                <input class="input-text" id="hb-ma-hoc-bong" placeholder="Ma hoc bong" />
+                <input class="input-text" id="hb-ma-hoc-ky" placeholder="Ma hoc ky" />
+            </div>
+            <div class="toolbar">
+                <input class="input-text" id="hb-ghi-chu" placeholder="Ghi chu (neu co)" />
+                <button class="btn" type="button" id="btn-duyet-hoc-bong">Xac nhan hoc bong</button>
+            </div>
+            <pre class="portal-result" id="hb-output"></pre>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/accounting-approvals.js" asp-append-version="true"></script>
+}

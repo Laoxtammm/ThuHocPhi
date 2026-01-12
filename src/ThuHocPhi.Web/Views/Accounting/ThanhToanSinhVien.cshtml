@@ -1,0 +1,131 @@
+@{
+    ViewData["Title"] = "Ke toan - Thanh toan hoc phi";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_AccountingNav")
+    <section class="portal-content">
+        <h1>Thanh toan hoc phi sinh vien</h1>
+        <p>Theo doi chi tiet cac khoan thu, da thanh toan va con no.</p>
+
+        <div class="section-block">
+            <h3>Danh sach cong no chi tiet</h3>
+            <table class="portal-table" id="student-payment-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ho ten</th>
+                        <th>Ngay sinh</th>
+                        <th>Lop</th>
+                        <th>So tin chi</th>
+                        <th>Thanh tien</th>
+                        <th>Mien giam</th>
+                        <th>Hoc phi sau mien giam</th>
+                        <th>Da thanh toan</th>
+                        <th>Con no</th>
+                        <th>Hanh dong</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ma-sv="SV001">
+                        <td>1</td>
+                        <td>Nguyen Van An</td>
+                        <td>15/01/2005</td>
+                        <td>CNPM-K58</td>
+                        <td>18</td>
+                        <td>12.000.000d</td>
+                        <td>0d</td>
+                        <td>12.000.000d</td>
+                        <td>6.000.000d</td>
+                        <td>6.000.000d</td>
+                        <td><button class="btn secondary" type="button" data-view-detail="SV001">Xem chi tiet</button></td>
+                    </tr>
+                    <tr data-ma-sv="SV002">
+                        <td>2</td>
+                        <td>Tran Thi Bach</td>
+                        <td>20/03/2005</td>
+                        <td>CNPM-K58</td>
+                        <td>16</td>
+                        <td>10.500.000d</td>
+                        <td>50% (Ho ngheo)</td>
+                        <td>5.250.000d</td>
+                        <td>3.000.000d</td>
+                        <td>2.250.000d</td>
+                        <td><button class="btn secondary" type="button" data-view-detail="SV002">Xem chi tiet</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-block" id="payment-detail">
+            <h3>Chi tiet dong hoc phi</h3>
+            <div class="toolbar">
+                <span class="tag" id="detail-name">Chon sinh vien de xem chi tiet</span>
+                <span class="tag" id="detail-class"></span>
+                <span class="tag" id="detail-credits"></span>
+            </div>
+            <div class="toolbar">
+                <span class="tag" id="detail-paid"></span>
+                <span class="tag" id="detail-remaining"></span>
+                <span class="tag" id="detail-count"></span>
+            </div>
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Ky</th>
+                        <th>Ngay dong</th>
+                        <th>So tien</th>
+                        <th>So bien lai</th>
+                        <th>Ma thanh toan</th>
+                    </tr>
+                </thead>
+                <tbody id="detail-payment-body"></tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<script type="application/json" id="payment-detail-data">
+{
+  "SV001": {
+    "hoTen": "Nguyen Van An",
+    "lop": "CNPM-K58",
+    "tinChi": 18,
+    "daThanhToan": 6000000,
+    "conNo": 6000000,
+    "payments": [
+      {
+        "ky": "HK2 2024/2025",
+        "ngay": "10/05/2025",
+        "soTien": 6000000,
+        "bienLai": "BL2025-0008",
+        "maThanhToan": "SV001 20250510103012 AB12"
+      }
+    ]
+  },
+  "SV002": {
+    "hoTen": "Tran Thi Bach",
+    "lop": "CNPM-K58",
+    "tinChi": 16,
+    "daThanhToan": 3000000,
+    "conNo": 2250000,
+    "payments": [
+      {
+        "ky": "HK1 2025/2026",
+        "ngay": "05/09/2025",
+        "soTien": 3000000,
+        "bienLai": "BL2025-0115",
+        "maThanhToan": "SV002 20250905120001 CD34"
+      }
+    ]
+  }
+}
+</script>
+
+@section Scripts {
+    <script src="~/js/accounting-payments.js" asp-append-version="true"></script>
+}

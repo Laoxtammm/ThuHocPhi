@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Chương trình đào tạo";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+}
+
+<div class="portal">
+    @await Html.PartialAsync("_StudentNav")
+    <section class="portal-content">
+        <h1>Chương trình đào tạo</h1>
+        <p>Tra cứu cấu trúc chương trình đào tạo theo từng khối kiến thức.</p>
+
+        <div class="toolbar">
+            <button class="btn" type="button" data-training-filter="all">Tất cả</button>
+            <button class="btn secondary" type="button" data-training-filter="chung">Khối kiến thức chung</button>
+            <button class="btn secondary" type="button" data-training-filter="co-so">Khối cơ sở ngành</button>
+            <button class="btn secondary" type="button" data-training-filter="chuyen-nganh">Khối chuyên ngành</button>
+        </div>
+
+        <div class="section-block" data-training-section="chung">
+            <h3>Khối kiến thức chung</h3>
+            <p>Toán, Vật lý đại cương, Lý thuyết cơ sở và các môn đại cương bắt buộc.</p>
+            <ul>
+                <li>Giải tích, Đại số tuyến tính, Xác suất thống kê.</li>
+                <li>Vật lý đại cương, Hóa học cơ sở.</li>
+                <li>Tiếng Anh học thuật, Giáo dục quốc phòng.</li>
+            </ul>
+        </div>
+
+        <div class="section-block" data-training-section="co-so">
+            <h3>Khối cơ sở ngành</h3>
+            <p>Cơ sở công nghệ, nguyên lý máy, kỹ thuật điện và các học phần nền tảng.</p>
+            <ul>
+                <li>Cơ sở dữ liệu, Lập trình hướng đối tượng.</li>
+                <li>Cấu trúc dữ liệu &amp; giải thuật.</li>
+                <li>Hệ điều hành, Mạng máy tính cơ bản.</li>
+            </ul>
+        </div>
+
+        <div class="section-block" data-training-section="chuyen-nganh">
+            <h3>Khối chuyên ngành</h3>
+            <p>PLC, CAD/CAM/CNC, tự động hóa sản xuất và các chuyên đề nâng cao.</p>
+            <ul>
+                <li>Công nghệ phần mềm, Hệ thống thông tin.</li>
+                <li>An toàn thông tin, Trí tuệ nhân tạo.</li>
+                <li>Chuyên đề thực tập và đồ án tốt nghiệp.</li>
+            </ul>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/student-training.js" asp-append-version="true"></script>
+}

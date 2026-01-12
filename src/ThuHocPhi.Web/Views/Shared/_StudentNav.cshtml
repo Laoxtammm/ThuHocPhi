@@ -1,0 +1,16 @@
+﻿<aside class="portal-nav">
+    <div class="student-header">
+        <img src="/pictures/Logo_MTA_new.png" alt="Sinh viên" class="student-avatar" id="student-avatar" />
+        <div>
+            <div class="student-name" id="student-name">Sinh viên</div>
+            <div class="student-code" id="student-code">---</div>
+        </div>
+    </div>
+    <a asp-controller="Student" asp-action="Index" class="portal-link">Trang chủ</a>
+    <a asp-controller="Student" asp-action="DangKyTinChi" class="portal-link">Đăng ký học phần</a>
+    <a asp-controller="Student" asp-action="HocPhi" class="portal-link">Thanh toán học phí</a>
+    <a asp-controller="Student" asp-action="TinhTrangHocTap" class="portal-link">Theo dõi tiến trình học tập</a>
+    <a asp-controller="Student" asp-action="ThongTinSinhVien" class="portal-link">Thông tin sinh viên</a>
+</aside>
+
+<script src="~/js/student-profile.js" asp-append-version="true"></script>
