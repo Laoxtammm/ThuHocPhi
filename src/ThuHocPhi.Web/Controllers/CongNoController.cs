@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ThuHocPhi.Application.DTOs.CongNo;
@@ -46,6 +47,31 @@ public sealed class CongNoController : ControllerBase
             return NotFound();
         }
 
+        return Ok(result);
+    }
+
+    [Authorize(Roles = "SinhVien")]
+    [HttpPost("tu-tinh")]
+    public async Task<IActionResult> TinhCongNoChoSinhVien([FromBody] CongNoTinhRequest request, CancellationToken cancellationToken)
+    {
+        var maSv = User.FindFirstValue(ClaimTypes.Name);
+        if (string.IsNullOrWhiteSpace(maSv))
+        {
+            return Unauthorized();
+        }
+
+        if (string.IsNullOrWhiteSpace(request.MaHocKy))
+        {
+            return BadRequest(new { message = "maHocKy is required." });
+        }
+
+        var input = new CongNoTinhRequest
+        {
+            MaSV = maSv,
+            MaHocKy = request.MaHocKy
+        };
+
+        var result = await _congNoService.TinhCongNoAsync(input, cancellationToken);
         return Ok(result);
     }
 }

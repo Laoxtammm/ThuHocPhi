@@ -4,14 +4,17 @@
   const payBtn = document.getElementById("btn-pay");
   const receiptBtn = document.getElementById("btn-receipt");
   const methodButtons = document.querySelectorAll("[data-payment]");
-  const itemButtons = document.querySelectorAll("[data-pay-item]");
-  const paymentTable = document.getElementById("payment-items");
+  const paymentTable = document.querySelector("[data-payment-table]");
+  const paymentBody = paymentTable?.querySelector("tbody");
 
   const token = localStorage.getItem("thuhocphi_token");
-  const paidKey = "thuhocphi_paid_items";
   let selectedMethod = "";
   let lastReceiptText = "";
   let lastPaymentCode = "";
+  let currentItems = [];
+  let currentProfile = null;
+  let currentCongNo = null;
+  const maHocKy = paymentTable?.getAttribute("data-ma-hoc-ky") || "HK1_2526";
 
   const defaultCourses = [
     { code: "IT101", name: "Nhap mon lap trinh", credits: 3 },
@@ -52,35 +55,23 @@
     return result;
   }
 
-  function normalize(text) {
-    return String(text || "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, "");
+  function mapMethodToCode(method) {
+    if (method === "VNPay") return "MB";
+    if (method === "MoMo") return "MB";
+    if (method === "Chuyen khoan") return "MB";
+    return "MB";
   }
 
-  function buildKey(item) {
-    return `${normalize(item.name)}${normalize(item.term)}${Number(item.amount || 0)}`;
+  function mapStatus(code) {
+    if (code === 3) return { label: "Da thanh toan", badge: "ok" };
+    if (code === 2) return { label: "Dang thanh toan", badge: "warn" };
+    if (code === 4) return { label: "Qua han", badge: "danger" };
+    return { label: "Chua thanh toan", badge: "warn" };
   }
 
-  function loadPaidItems() {
+  async function fetchJson(url) {
     try {
-      const raw = localStorage.getItem(paidKey);
-      if (!raw) return new Set();
-      const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) return new Set();
-      return new Set(parsed.map((entry) => normalize(entry)));
-    } catch {
-      return new Set();
-    }
-  }
-
-  function savePaidItems(set) {
-    localStorage.setItem(paidKey, JSON.stringify(Array.from(set)));
-  }
-
-  async function getProfile() {
-    try {
-      const response = await fetch("/api/sinh-vien/me", {
+      const response = await fetch(url, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         credentials: "same-origin",
       });
@@ -89,6 +80,16 @@
     } catch {
       return null;
     }
+  }
+
+  async function getProfile() {
+    if (currentProfile) return currentProfile;
+    currentProfile = await fetchJson("/api/sinh-vien/me");
+    return currentProfile;
+  }
+
+  async function getCongNo(maSv) {
+    return fetchJson(`/api/cong-no?maSv=${encodeURIComponent(maSv)}&maHocKy=${encodeURIComponent(maHocKy)}`);
   }
 
   function buildPaymentCode(profile) {
@@ -134,61 +135,82 @@
     return lines.join("\n");
   }
 
-  function updateRowStatus(row, isPaid) {
-    const badge = row.querySelector("[data-status]");
-    if (badge) {
-      badge.textContent = isPaid ? "Da thanh toan" : "Chua thanh toan";
-      badge.classList.toggle("ok", isPaid);
-      badge.classList.toggle("warn", !isPaid);
+  function renderItems() {
+    if (!paymentBody) return;
+    paymentBody.innerHTML = "";
+
+    if (!currentItems.length) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td colspan="5">Khong co khoan thu can thanh toan.</td>`;
+      paymentBody.appendChild(row);
+      return;
     }
 
-    const button = row.querySelector("[data-pay-item]");
-    if (button) {
-      button.disabled = isPaid;
-      button.classList.toggle("disabled", isPaid);
-      button.textContent = isPaid ? "Da thanh toan" : "Thanh toan";
-    }
-  }
+    const statusInfo = mapStatus(currentCongNo?.trangThai);
+    const isFullyPaid =
+      currentCongNo &&
+      Number(currentCongNo.tongPhaiNop || 0) -
+        Number(currentCongNo.tienMienGiam || 0) -
+        Number(currentCongNo.tongDaNop || 0) <=
+        0;
 
-  function syncPaymentTable() {
-    if (!paymentTable) return;
-    const paid = loadPaidItems();
-    const rows = Array.from(paymentTable.querySelectorAll("tbody tr"));
-    rows.forEach((row) => {
-      const btn = row.querySelector("[data-pay-item]");
-      if (!btn) return;
-      const item = {
-        name: btn.getAttribute("data-name") || "",
-        term: btn.getAttribute("data-term") || "",
-        amount: Number(btn.getAttribute("data-amount") || 0),
-      };
-      updateRowStatus(row, paid.has(buildKey(item)));
+    currentItems.forEach((item, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.term}</td>
+        <td>${formatMoney(item.amount)}</td>
+        <td><span class="badge ${statusInfo.badge}">${statusInfo.label}</span></td>
+        <td>
+          <button class="btn secondary" type="button" data-pay-item data-item-index="${index}">${
+            isFullyPaid ? "Da thanh toan" : "Thanh toan"
+          }</button>
+        </td>
+      `;
+
+      const button = row.querySelector("[data-pay-item]");
+      if (button) {
+        button.disabled = isFullyPaid || Number(item.amount) <= 0;
+        button.classList.toggle("disabled", button.disabled);
+      }
+      paymentBody.appendChild(row);
     });
   }
 
-  function markItemsPaid(items) {
-    const paid = loadPaidItems();
-    items.forEach((item) => {
-      paid.add(buildKey(item));
-    });
-    savePaidItems(paid);
-    if (!paymentTable) return;
-    const rows = Array.from(paymentTable.querySelectorAll("tbody tr"));
-    items.forEach((item) => {
-      const key = buildKey(item);
-      rows.forEach((row) => {
-        const btn = row.querySelector("[data-pay-item]");
-        if (!btn) return;
-        const rowItem = {
-          name: btn.getAttribute("data-name") || "",
-          term: btn.getAttribute("data-term") || "",
-          amount: Number(btn.getAttribute("data-amount") || 0),
-        };
-        if (buildKey(rowItem) === key) {
-          updateRowStatus(row, true);
-        }
+  async function loadItems() {
+    const profile = await getProfile();
+    if (!profile?.maSv) {
+      if (paymentBody) {
+        paymentBody.innerHTML = `<tr><td colspan="5">Khong tim thay thong tin sinh vien.</td></tr>`;
+      }
+      return;
+    }
+
+    let congNo = await getCongNo(profile.maSv);
+    if (!congNo) {
+      await fetchJson("/api/cong-no/tu-tinh", {
+        method: "POST",
+        body: JSON.stringify({ maHocKy })
       });
-    });
+      congNo = await getCongNo(profile.maSv);
+    }
+
+    if (!congNo) {
+      if (paymentBody) {
+        paymentBody.innerHTML = `<tr><td colspan="5">Chua co cong no cho hoc ky nay.</td></tr>`;
+      }
+      return;
+    }
+
+    currentProfile = profile;
+    currentCongNo = congNo;
+    currentItems = (congNo.chiTiet || []).map((item) => ({
+      name: item.moTa,
+      term: congNo.maHocKy,
+      maHocKy: congNo.maHocKy,
+      amount: Number(item.phaiThu || 0),
+    }));
+    renderItems();
   }
 
   methodButtons.forEach((btn) => {
@@ -208,36 +230,82 @@
 
     lastPaymentCode = "";
     const profile = await getProfile();
+    if (!profile?.maSv) {
+      if (output) output.textContent = "Khong tim thay thong tin sinh vien.";
+      return;
+    }
     const courses = getSelectedCourses();
     const discountPercent = profile?.maSv?.toLowerCase() === "sv002" ? 50 : 0;
     const scholarshipAmount = profile?.maSv?.toLowerCase() === "sv001" ? 750000 : 0;
+
+    const methodCode = mapMethodToCode(selectedMethod);
+    const paymentCode = buildPaymentCode(profile);
+    const grouped = items.reduce((acc, item) => {
+      const key = item.maHocKy || "HK1_2526";
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(item);
+      return acc;
+    }, {});
+
+    for (const maHocKyKey of Object.keys(grouped)) {
+      const groupItems = grouped[maHocKyKey];
+      const total = groupItems.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+      const payload = {
+        maSV: profile?.maSv || "SV001",
+        maHocKy: maHocKyKey,
+        soTien: total,
+        maPhuongThuc: methodCode,
+        maGiaoDichNganHang: paymentCode,
+        xuatBienLai: true,
+      };
+
+      const response = await fetch("/api/thanh-toan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        credentials: "same-origin",
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        if (output) output.textContent = `Thanh toan that bai: ${errorText}`;
+        return;
+      }
+    }
 
     lastReceiptText = buildReceipt(profile, items, courses, discountPercent, scholarshipAmount);
     if (output) {
       output.textContent = lastReceiptText;
     }
-    markItemsPaid(items);
+
+    await loadItems();
   }
 
   if (payBtn) {
     payBtn.addEventListener("click", async () => {
-      const items = [
-        { name: "Hoc phi HK1", term: "HK1 2025/2026", amount: 12000000 },
-        { name: "Le phi dich vu", term: "HK1 2025/2026", amount: 500000 },
-      ];
-      await handlePayment(items);
+      if (!currentItems.length) {
+        if (output) output.textContent = "Khong co khoan thu can thanh toan.";
+        return;
+      }
+      await handlePayment(currentItems);
     });
   }
 
-  itemButtons.forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const name = btn.getAttribute("data-name") || "Khoan thu";
-      const term = btn.getAttribute("data-term") || "";
-      const amount = Number(btn.getAttribute("data-amount") || 0);
-      if (!amount) return;
-      await handlePayment([{ name, term, amount }]);
+  if (paymentBody) {
+    paymentBody.addEventListener("click", async (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (!target.matches("[data-pay-item]")) return;
+      const index = Number(target.getAttribute("data-item-index") || -1);
+      if (index < 0 || index >= currentItems.length) return;
+      const item = currentItems[index];
+      if (!item || !item.amount) return;
+      await handlePayment([item]);
     });
-  });
+  }
 
   if (receiptBtn) {
     receiptBtn.addEventListener("click", () => {
@@ -258,5 +326,5 @@
     });
   }
 
-  syncPaymentTable();
+  loadItems();
 })();

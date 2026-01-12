@@ -1,5 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Miễn giảm & học bổng";
+@{
+    ViewData["Title"] = "Mien giam va hoc bong";
 }
 
 @section Styles {
@@ -9,50 +9,78 @@
 <div class="portal">
     @await Html.PartialAsync("_AdminNav")
     <section class="portal-content">
-        <h1>Miễn giảm &amp; học bổng</h1>
-        <p>Theo dõi danh sách sinh viên đã được miễn giảm và phê duyệt học bổng.</p>
+        <h1>Mien giam &amp; hoc bong</h1>
+        <p>Theo doi danh sach sinh vien da duoc mien giam va phe duyet hoc bong.</p>
 
         <div class="section-block">
-            <h3>Sinh viên được miễn giảm học phí</h3>
+            <h3>Sinh vien duoc mien giam hoc phi</h3>
             <table class="portal-table">
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Mã SV</th>
-                        <th>Họ tên</th>
-                        <th>Chính sách</th>
-                        <th>Mức miễn giảm</th>
-                        <th>Ghi chú</th>
+                        <th>Ma SV</th>
+                        <th>Ho ten</th>
+                        <th>Chinh sach</th>
+                        <th>Muc mien giam</th>
+                        <th>Ghi chu</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>1</td>
                         <td>SV002</td>
-                        <td>Trần Thị Bạch</td>
-                        <td>Hộ nghèo/Vùng sâu vùng xa</td>
+                        <td>Tran Thi Bach</td>
+                        <td>Ho ngheo/Vung sau vung xa</td>
                         <td>50%</td>
-                        <td>Đã phê duyệt bởi kế toán</td>
+                        <td>Da phe duyet boi ke toan</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="section-block">
-            <h3>Phê duyệt học bổng</h3>
+            <h3>Phe duyet hoc bong</h3>
             <div class="toolbar">
-                <input class="input-text" id="hb-ma-sv" placeholder="Mã sinh viên" />
-                <input class="input-text" id="hb-ma-hoc-bong" placeholder="Mã học bổng" />
-                <input class="input-text" id="hb-ma-hoc-ky" placeholder="Mã học kỳ" />
+                <input class="input-text" id="hb-ma-sv" placeholder="Ma sinh vien" list="hb-ma-sv-list" />
+                <input class="input-text" id="hb-ma-hoc-bong" placeholder="Ma hoc bong" list="hb-ma-hoc-bong-list" />
+                <input class="input-text" id="hb-ma-hoc-ky" placeholder="Ma hoc ky" list="hb-ma-hoc-ky-list" />
             </div>
             <div class="toolbar">
-                <input class="input-text" id="hb-ghi-chu" placeholder="Ghi chú (nếu có)" />
-                <button class="btn" type="button" id="btn-duyet-hoc-bong">Phê duyệt học bổng</button>
+                <input class="input-text" id="hb-khoa-dao-tao" placeholder="Khoa dao tao" list="hb-khoa-dao-tao-list" />
+                <input class="input-text" id="hb-lop-chuyen-nganh" placeholder="Lop chuyen nganh" list="hb-lop-chuyen-nganh-list" />
+            </div>
+            <div class="toolbar">
+                <input class="input-text" id="hb-ghi-chu" placeholder="Ghi chu (neu co)" />
+                <button class="btn" type="button" id="btn-duyet-hoc-bong">Phe duyet hoc bong</button>
             </div>
             <pre class="portal-result" id="hb-output"></pre>
         </div>
     </section>
 </div>
+
+<datalist id="hb-ma-sv-list">
+    <option value="SV001"></option>
+    <option value="SV002"></option>
+    <option value="SV003"></option>
+</datalist>
+<datalist id="hb-ma-hoc-bong-list">
+    <option value="HB_A"></option>
+    <option value="HB_B"></option>
+    <option value="HB_LEQUYDON"></option>
+    <option value="HB_GIAM_20"></option>
+</datalist>
+<datalist id="hb-ma-hoc-ky-list">
+    <option value="HK1-2025-2026"></option>
+    <option value="HK2-2025-2026"></option>
+</datalist>
+<datalist id="hb-khoa-dao-tao-list">
+    <option value="K58"></option>
+    <option value="K59"></option>
+</datalist>
+<datalist id="hb-lop-chuyen-nganh-list">
+    <option value="CNPM-K58"></option>
+    <option value="ATTT-K59"></option>
+</datalist>
 
 @section Scripts {
     <script src="~/js/admin-hoc-bong.js" asp-append-version="true"></script>

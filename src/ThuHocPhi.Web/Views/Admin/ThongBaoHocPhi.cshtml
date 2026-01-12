@@ -1,5 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Thông báo học phí";
+@{
+    ViewData["Title"] = "Thong bao hoc phi";
 }
 
 @section Styles {
@@ -9,22 +9,23 @@
 <div class="portal">
     @await Html.PartialAsync("_AdminNav")
     <section class="portal-content">
-        <h1>Thông báo học phí</h1>
-        <p>Tạo và gửi thông báo học phí theo lớp/khoa.</p>
+        <h1>Thong bao hoc phi</h1>
+        <p>Tao va gui thong bao hoc phi theo lop/khoa.</p>
 
         <div class="toolbar">
-            <button class="btn" type="button">Tạo thông báo</button>
-            <button class="btn secondary" type="button">Gửi nhắc nợ</button>
+            <button class="btn" type="button" data-admin-action="add-notice">Tao thong bao</button>
+            <button class="btn secondary" type="button" data-admin-action="remind-notice">Gui nhac no</button>
         </div>
+        <pre class="portal-result" id="admin-notice-output"></pre>
 
-        <table class="portal-table">
+        <table class="portal-table" id="admin-notice-table">
             <thead>
                 <tr>
-                    <th>Mã thông báo</th>
-                    <th>Học kỳ</th>
-                    <th>Phạm vi</th>
-                    <th>Hạn nộp</th>
-                    <th>Trạng thái</th>
+                    <th>Ma thong bao</th>
+                    <th>Hoc ky</th>
+                    <th>Pham vi</th>
+                    <th>Han nop</th>
+                    <th>Trang thai</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,16 +34,20 @@
                     <td>HK1 2025-2026</td>
                     <td>Khoa CNTT</td>
                     <td>30/09/2025</td>
-                    <td><span class="badge ok">Đã phát hành</span></td>
+                    <td><span class="badge ok">Da phat hanh</span></td>
                 </tr>
                 <tr>
                     <td>TBHP2025_02</td>
                     <td>HK1 2025-2026</td>
-                    <td>Khoa Cơ khí</td>
+                    <td>Khoa Co khi</td>
                     <td>30/09/2025</td>
-                    <td><span class="badge warn">Nháp</span></td>
+                    <td><span class="badge warn">Nhap</span></td>
                 </tr>
             </tbody>
         </table>
     </section>
 </div>
+
+@section Scripts {
+    <script src="~/js/admin-actions.js" asp-append-version="true"></script>
+}

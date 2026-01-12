@@ -34,14 +34,15 @@
             <div class="toolbar">
                 <input class="input-text" data-field="code" placeholder="Ma hoc phan" />
                 <input class="input-text" data-field="name" placeholder="Ten hoc phan" />
-                <input class="input-text" data-field="condition" placeholder="Dieu kien hoan thanh" />
+                <input class="input-text" data-field="credits" placeholder="So tin chi" />
             </div>
             <div class="toolbar">
+                <input class="input-text" data-field="condition" placeholder="Dieu kien hoan thanh" />
                 <input class="input-text" data-field="major" placeholder="Chuyen nganh" />
                 <input class="input-text" data-field="class" placeholder="Lop" />
-                <input class="input-text" data-field="note" placeholder="Ghi chu" />
             </div>
             <div class="toolbar">
+                <input class="input-text" data-field="note" placeholder="Ghi chu" />
                 <button class="btn" type="button" data-action="save">Luu hoc phan</button>
                 <button class="btn secondary" type="button" data-action="cancel">Huy</button>
             </div>
@@ -49,11 +50,12 @@
 
         <div class="section-block">
             <h3>Danh sach hoc phan dieu kien</h3>
-            <table class="portal-table" id="edu-condition-table" data-columns="code,name,condition,major,class,note">
+            <table class="portal-table" id="edu-condition-table" data-columns="code,name,credits,condition,major,class,note" data-edu-api="/api/hoc-phan" data-edu-type="Dieu kien">
                 <thead>
                     <tr>
                         <th>Ma hoc phan</th>
                         <th>Ten hoc phan</th>
+                        <th>So tin chi</th>
                         <th>Dieu kien hoan thanh</th>
                         <th>Chuyen nganh</th>
                         <th>Lop</th>
@@ -62,29 +64,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-major="CNPM" data-class="K58">
-                        <td>CN301</td>
-                        <td>Cong nghe phan mem</td>
-                        <td>Da hoan thanh IT101 va MA201</td>
-                        <td>CNPM</td>
-                        <td>K58</td>
-                        <td>Dang ky sau hoc phan dai cuong</td>
-                        <td>
-                            <button class="btn secondary" type="button" data-edit>Sua</button>
-                            <button class="btn secondary" type="button" data-delete>Xoa</button>
-                        </td>
-                    </tr>
-                    <tr data-major="ATTT" data-class="K59">
-                        <td>AT301</td>
-                        <td>Phan tich an toan</td>
-                        <td>Da hoan thanh AT201</td>
-                        <td>ATTT</td>
-                        <td>K59</td>
-                        <td>Hoc phan nang cao</td>
-                        <td>
-                            <button class="btn secondary" type="button" data-edit>Sua</button>
-                            <button class="btn secondary" type="button" data-delete>Xoa</button>
-                        </td>
+                    <tr>
+                        <td colspan="8">Dang tai du lieu...</td>
                     </tr>
                 </tbody>
             </table>

@@ -187,8 +187,8 @@
 .btn {
   padding: 6px 12px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #0f7f4c;
+  border: 1px solid #0f7f4c;
+  background: #0b0b0b;
   color: #fff;
   font-size: 12px;
   cursor: pointer;
@@ -199,7 +199,12 @@
 }
 
 .btn.secondary {
-  background: transparent;
+  background: #0b0b0b;
+  border-color: #0f7f4c;
+}
+
+.btn:hover {
+  background: #0f7f4c;
 }
 
 .btn.disabled {

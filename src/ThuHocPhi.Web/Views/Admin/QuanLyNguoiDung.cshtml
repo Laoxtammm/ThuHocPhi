@@ -1,5 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Quản lý người dùng";
+@{
+    ViewData["Title"] = "Quan ly nguoi dung";
 }
 
 @section Styles {
@@ -9,47 +9,51 @@
 <div class="portal">
     @await Html.PartialAsync("_AdminNav")
     <section class="portal-content">
-        <h1>Quản lý người dùng</h1>
-        <p>Tạo mới, phân quyền và khóa/mở tài khoản.</p>
+        <h1>Quan ly nguoi dung</h1>
+        <p>Tao moi, phan quyen va khoa/mo tai khoan.</p>
 
         <div class="toolbar">
-            <button class="btn" type="button">Thêm người dùng</button>
-            <button class="btn secondary" type="button">Xuất danh sách</button>
+            <button class="btn" type="button" data-admin-action="add-user">Them nguoi dung</button>
+            <button class="btn secondary" type="button" data-admin-action="export-user">Xuat danh sach</button>
         </div>
 
-        <table class="portal-table">
+        <table class="portal-table" id="admin-user-table">
             <thead>
                 <tr>
-                    <th>Tài khoản</th>
-                    <th>Họ tên</th>
-                    <th>Vai trò</th>
-                    <th>Trạng thái</th>
-                    <th>Hành động</th>
+                    <th>Tai khoan</th>
+                    <th>Ho ten</th>
+                    <th>Vai tro</th>
+                    <th>Trang thai</th>
+                    <th>Hanh dong</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>admin</td>
-                    <td>Quản trị hệ thống</td>
+                    <td>Quan tri he thong</td>
                     <td>Administrator</td>
-                    <td><span class="badge ok">Hoạt động</span></td>
-                    <td><a class="btn secondary" href="#">Sửa</a></td>
+                    <td><span class="badge ok">Hoat dong</span></td>
+                    <td><button class="btn secondary" type="button" data-edit-user>Sua</button></td>
                 </tr>
                 <tr>
                     <td>ketoan01</td>
-                    <td>Phòng Tài chính</td>
+                    <td>Phong Tai chinh</td>
                     <td>PhongTaiChinh</td>
-                    <td><span class="badge ok">Hoạt động</span></td>
-                    <td><a class="btn secondary" href="#">Sửa</a></td>
+                    <td><span class="badge ok">Hoat dong</span></td>
+                    <td><button class="btn secondary" type="button" data-edit-user>Sua</button></td>
                 </tr>
                 <tr>
                     <td>daotao01</td>
-                    <td>Phòng Đào tạo</td>
+                    <td>Phong Dao tao</td>
                     <td>PhongDaoTao</td>
-                    <td><span class="badge warn">Tạm khóa</span></td>
-                    <td><a class="btn secondary" href="#">Mở khóa</a></td>
+                    <td><span class="badge warn">Tam khoa</span></td>
+                    <td><button class="btn secondary" type="button" data-toggle-user>Mo khoa</button></td>
                 </tr>
             </tbody>
         </table>
     </section>
 </div>
+
+@section Scripts {
+    <script src="~/js/admin-actions.js" asp-append-version="true"></script>
+}

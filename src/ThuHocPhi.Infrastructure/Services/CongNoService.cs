@@ -19,12 +19,12 @@ public sealed class CongNoService : ICongNoService
 
     public async Task<CongNoTinhResult> TinhCongNoAsync(CongNoTinhRequest request, CancellationToken cancellationToken)
     {
-        var result = await _dbContext.Set<CongNoTinhResult>()
+        var data = await _dbContext.Set<CongNoTinhResult>()
             .FromSqlRaw("EXEC dbo.sp_TinhCongNo @MaSV = {0}, @MaHocKy = {1}", request.MaSV, request.MaHocKy)
             .AsNoTracking()
-            .FirstOrDefaultAsync(cancellationToken);
+            .ToListAsync(cancellationToken);
 
-        return result ?? new CongNoTinhResult();
+        return data.FirstOrDefault() ?? new CongNoTinhResult();
     }
 
     public async Task<CongNoDto?> GetCongNoAsync(string maSv, string maHocKy, CancellationToken cancellationToken)

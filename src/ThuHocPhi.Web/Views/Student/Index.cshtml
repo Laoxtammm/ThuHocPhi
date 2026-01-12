@@ -1,49 +1,53 @@
-﻿@{
-    ViewData["Title"] = "Cổng sinh viên";
+@{
+    ViewData["Title"] = "Cong sinh vien";
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
 }
 
-<div class="portal">
+<div class="portal" data-dashboard data-ma-hoc-ky="HK1_2526">
     @await Html.PartialAsync("_StudentNav")
     <section class="portal-content">
-        <h1>Cổng sinh viên</h1>
-        <p>Quản lý đăng ký tín chỉ, theo dõi học tập và thanh toán học phí tập trung.</p>
+        <h1>Cong sinh vien</h1>
+        <p>Quan ly dang ky tin chi, theo doi hoc tap va thanh toan hoc phi tap trung.</p>
 
         <div class="card-grid">
             <div class="stat-card">
-                <h4>Học kỳ hiện tại</h4>
-                <div class="value">HK1 - 2025/2026</div>
-                <span class="tag">Đang mở</span>
+                <h4>Hoc ky hien tai</h4>
+                <div class="value" id="dashboard-term">HK1 - 2025/2026</div>
+                <span class="tag" id="dashboard-term-status">Dang mo</span>
             </div>
             <div class="stat-card">
-                <h4>Công nợ học phí</h4>
-                <div class="value">12.500.000đ</div>
-                <span class="badge warn">Chưa thanh toán</span>
+                <h4>Cong no hoc phi</h4>
+                <div class="value" id="dashboard-debt">0d</div>
+                <span class="badge warn" id="dashboard-debt-badge">Chua thanh toan</span>
             </div>
             <div class="stat-card">
-                <h4>Tín chỉ đã đăng ký</h4>
-                <div class="value">18</div>
-                <span class="tag">Đã xác nhận</span>
+                <h4>Tin chi da dang ky</h4>
+                <div class="value" id="dashboard-credits">0</div>
+                <span class="tag" id="dashboard-credits-note">Tong tu khi nhap hoc</span>
             </div>
             <div class="stat-card">
-                <h4>Đăng ký thi</h4>
-                <div class="value">Chưa mở</div>
-                <span class="badge danger">Chưa đủ điều kiện</span>
+                <h4>Dang ky thi</h4>
+                <div class="value">Chua mo</div>
+                <span class="badge danger">Chua du dieu kien</span>
             </div>
         </div>
 
         <div class="section-block">
-            <h3>Truy cập nhanh</h3>
+            <h3>Truy cap nhanh</h3>
             <div class="toolbar">
-                <a class="btn" asp-controller="Student" asp-action="DangKyTinChi">Đăng ký học phần</a>
-                <a class="btn secondary" asp-controller="Student" asp-action="HocPhi">Thanh toán học phí</a>
-                <a class="btn secondary" asp-controller="Student" asp-action="TinhTrangHocTap">Tiến trình học tập</a>
-                <a class="btn secondary" asp-controller="Student" asp-action="ThongTinSinhVien">Hồ sơ sinh viên</a>
+                <a class="btn" asp-controller="Student" asp-action="DangKyTinChi">Dang ky hoc phan</a>
+                <a class="btn secondary" asp-controller="Student" asp-action="HocPhi">Thanh toan hoc phi</a>
+                <a class="btn secondary" asp-controller="Student" asp-action="TinhTrangHocTap">Tien trinh hoc tap</a>
+                <a class="btn secondary" asp-controller="Student" asp-action="ThongTinSinhVien">Ho so sinh vien</a>
             </div>
-            <p>Hoàn tất học phí trước khi đăng ký thi kết thúc môn.</p>
+            <p>Hoan tat hoc phi truoc khi dang ky thi ket thuc mon.</p>
         </div>
     </section>
 </div>
+
+@section Scripts {
+    <script src="~/js/student-dashboard.js" asp-append-version="true"></script>
+}

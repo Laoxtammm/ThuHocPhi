@@ -1,5 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Biểu phí";
+@{
+    ViewData["Title"] = "Bieu phi";
 }
 
 @section Styles {
@@ -9,40 +9,45 @@
 <div class="portal">
     @await Html.PartialAsync("_AdminNav")
     <section class="portal-content">
-        <h1>Biểu phí</h1>
-        <p>Thiết lập mức học phí theo chương trình, học kỳ và đối tượng.</p>
+        <h1>Bieu phi</h1>
+        <p>Thiet lap muc hoc phi theo chuong trinh, hoc ky va doi tuong.</p>
 
         <div class="toolbar">
-            <button class="btn" type="button">Thêm biểu phí</button>
-            <button class="btn secondary" type="button">Nhập từ Excel</button>
+            <button class="btn" type="button" data-admin-action="add-fee">Them bieu phi</button>
+            <button class="btn secondary" type="button" data-admin-action="import-fee">Nhap tu Excel</button>
         </div>
+        <pre class="portal-result" id="admin-fee-output"></pre>
 
-        <table class="portal-table">
+        <table class="portal-table" id="admin-fee-table">
             <thead>
                 <tr>
-                    <th>Mã biểu phí</th>
-                    <th>Tên biểu phí</th>
-                    <th>Học kỳ</th>
-                    <th>Mức thu</th>
-                    <th>Trạng thái</th>
+                    <th>Ma bieu phi</th>
+                    <th>Ten bieu phi</th>
+                    <th>Hoc ky</th>
+                    <th>Muc thu</th>
+                    <th>Trang thai</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>HP2025_HK1</td>
-                    <td>Học phí HK1 2025-2026</td>
+                    <td>Hoc phi HK1 2025-2026</td>
                     <td>HK1</td>
-                    <td>12.000.000đ</td>
-                    <td><span class="badge ok">Hiệu lực</span></td>
+                    <td>12.000.000d</td>
+                    <td><span class="badge ok">Hieu luc</span></td>
                 </tr>
                 <tr>
                     <td>HP2025_HK2</td>
-                    <td>Học phí HK2 2025-2026</td>
+                    <td>Hoc phi HK2 2025-2026</td>
                     <td>HK2</td>
-                    <td>11.500.000đ</td>
-                    <td><span class="badge warn">Nháp</span></td>
+                    <td>11.500.000d</td>
+                    <td><span class="badge warn">Nhap</span></td>
                 </tr>
             </tbody>
         </table>
     </section>
 </div>
+
+@section Scripts {
+    <script src="~/js/admin-actions.js" asp-append-version="true"></script>
+}

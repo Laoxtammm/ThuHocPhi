@@ -6,66 +6,102 @@
   const paidEl = document.getElementById("fee-paid");
   const remainingEl = document.getElementById("fee-remaining");
   const remainingBadge = document.getElementById("fee-remaining-badge");
-
-  const paidKey = "thuhocphi_paid_items";
+  const token = localStorage.getItem("thuhocphi_token");
+  const maHocKy = table.getAttribute("data-ma-hoc-ky") || "HK1_2526";
 
   function formatMoney(value) {
-    return `${value.toLocaleString("vi-VN")}d`;
+    return `${Number(value || 0).toLocaleString("vi-VN")}d`;
   }
 
-  function normalize(text) {
-    return String(text || "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, "");
+  function mapStatus(code) {
+    if (code === 3) return { label: "Da thanh toan", badge: "ok" };
+    if (code === 2) return { label: "Dang thanh toan", badge: "warn" };
+    if (code === 4) return { label: "Qua han", badge: "danger" };
+    return { label: "Chua thanh toan", badge: "warn" };
   }
 
-  function buildKey(item) {
-    return `${normalize(item.name)}${normalize(item.term)}${Number(item.amount || 0)}`;
-  }
-
-  function loadPaidItems() {
-    try {
-      const raw = localStorage.getItem(paidKey);
-      if (!raw) return new Set();
-      const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) return new Set();
-      return new Set(parsed.map((entry) => normalize(entry)));
-    } catch {
-      return new Set();
+  async function fetchJson(url, options) {
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
+      },
+      credentials: "same-origin",
+      ...options
+    });
+    if (!response.ok) {
+      return null;
     }
+    if (response.status === 204) {
+      return {};
+    }
+    return response.json();
   }
 
-  const paid = loadPaidItems();
-  let total = 0;
-  let paidTotal = 0;
+  async function renderFromApi() {
+    const profileResponse = await fetchJson("/api/sinh-vien/me");
+    if (!profileResponse?.maSv) return false;
 
-  const rows = Array.from(table.querySelectorAll("tbody tr"));
-  rows.forEach((row) => {
-    const name = row.getAttribute("data-name") || "";
-    const term = row.getAttribute("data-term") || "";
-    const amount = Number(row.getAttribute("data-amount") || 0);
-    const key = buildKey({ name, term, amount });
-    const badge = row.querySelector("[data-status]");
-    const isDefaultPaid = row.getAttribute("data-default") === "paid";
-    const isPaid = paid.has(key) || isDefaultPaid;
+    let congNo = await fetchJson(
+      `/api/cong-no?maSv=${encodeURIComponent(profileResponse.maSv)}&maHocKy=${encodeURIComponent(maHocKy)}`,
+    );
 
-    total += amount;
-    if (isPaid) paidTotal += amount;
+    if (!congNo) {
+      await fetchJson("/api/cong-no/tu-tinh", {
+        method: "POST",
+        body: JSON.stringify({ maHocKy })
+      });
+      congNo = await fetchJson(
+        `/api/cong-no?maSv=${encodeURIComponent(profileResponse.maSv)}&maHocKy=${encodeURIComponent(maHocKy)}`,
+      );
+    }
 
-    if (badge) {
-      badge.textContent = isPaid ? "Da thanh toan" : "Chua thanh toan";
-      badge.classList.toggle("ok", isPaid);
-      badge.classList.toggle("warn", !isPaid);
+    if (!congNo) return false;
+
+    const statusInfo = mapStatus(congNo.trangThai);
+    if (totalEl) totalEl.textContent = formatMoney(congNo.tongPhaiNop);
+    if (paidEl) paidEl.textContent = formatMoney(congNo.tongDaNop);
+    if (remainingEl) remainingEl.textContent = formatMoney(congNo.conNo);
+    if (remainingBadge) {
+      remainingBadge.textContent = congNo.conNo > 0 ? "Con no" : "Da hoan thanh";
+      remainingBadge.classList.toggle("ok", congNo.conNo <= 0);
+      remainingBadge.classList.toggle("warn", congNo.conNo > 0);
+    }
+
+    const tbody = table.querySelector("tbody");
+    if (!tbody) return true;
+    tbody.innerHTML = "";
+
+    if (!congNo.chiTiet || !congNo.chiTiet.length) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td colspan=\"4\">Chua co khoan thu trong hoc ky nay.</td>`;
+      tbody.appendChild(row);
+      return true;
+    }
+
+    congNo.chiTiet.forEach((item) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.moTa}</td>
+        <td>${maHocKy}</td>
+        <td>${formatMoney(item.phaiThu)}</td>
+        <td><span class="badge ${statusInfo.badge}">${statusInfo.label}</span></td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    return true;
+  }
+
+  renderFromApi().then((success) => {
+    if (success) return;
+    if (totalEl) totalEl.textContent = "0d";
+    if (paidEl) paidEl.textContent = "0d";
+    if (remainingEl) remainingEl.textContent = "0d";
+    if (remainingBadge) remainingBadge.textContent = "Chua co cong no";
+    const tbody = table.querySelector("tbody");
+    if (tbody) {
+      tbody.innerHTML = `<tr><td colspan=\"4\">Chua co cong no cho hoc ky nay.</td></tr>`;
     }
   });
-
-  const remaining = total - paidTotal;
-  if (totalEl) totalEl.textContent = formatMoney(total);
-  if (paidEl) paidEl.textContent = formatMoney(paidTotal);
-  if (remainingEl) remainingEl.textContent = formatMoney(remaining);
-  if (remainingBadge) {
-    remainingBadge.textContent = remaining > 0 ? "Con no" : "Da hoan thanh";
-    remainingBadge.classList.toggle("ok", remaining <= 0);
-    remainingBadge.classList.toggle("warn", remaining > 0);
-  }
 })();
