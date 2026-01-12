@@ -13,8 +13,14 @@
     return `${value.toLocaleString("vi-VN")}d`;
   }
 
+  function normalize(text) {
+    return String(text || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, "");
+  }
+
   function buildKey(item) {
-    return `${item.name}|${item.term}|${item.amount}`.toLowerCase();
+    return `${normalize(item.name)}${normalize(item.term)}${Number(item.amount || 0)}`;
   }
 
   function loadPaidItems() {
@@ -23,7 +29,7 @@
       if (!raw) return new Set();
       const parsed = JSON.parse(raw);
       if (!Array.isArray(parsed)) return new Set();
-      return new Set(parsed);
+      return new Set(parsed.map((entry) => normalize(entry)));
     } catch {
       return new Set();
     }
