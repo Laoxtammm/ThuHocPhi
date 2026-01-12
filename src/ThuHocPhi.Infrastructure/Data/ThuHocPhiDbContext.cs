@@ -21,6 +21,8 @@ public sealed class ThuHocPhiDbContext : DbContext
     public DbSet<LoaiPhi> LoaiPhi => Set<LoaiPhi>();
     public DbSet<BieuPhi> BieuPhi => Set<BieuPhi>();
     public DbSet<HocKy> HocKy => Set<HocKy>();
+    public DbSet<HocPhan> HocPhan => Set<HocPhan>();
+    public DbSet<DangKyHocPhan> DangKyHocPhan => Set<DangKyHocPhan>();
     public DbSet<SinhVien> SinhVien => Set<SinhVien>();
     public DbSet<SinhVienAnh> SinhVienAnh => Set<SinhVienAnh>();
     public DbSet<CongNo> CongNo => Set<CongNo>();
@@ -139,6 +141,29 @@ public sealed class ThuHocPhiDbContext : DbContext
             entity.Property(x => x.MaHocKy).HasMaxLength(20);
             entity.Property(x => x.TenHocKy).HasMaxLength(100).IsRequired();
             entity.Property(x => x.NamHoc).HasMaxLength(20);
+            entity.Property(x => x.TrangThai).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<HocPhan>(entity =>
+        {
+            entity.ToTable("HocPhan");
+            entity.HasKey(x => x.MaHocPhan);
+            entity.Property(x => x.MaHocPhan).HasMaxLength(20);
+            entity.Property(x => x.TenHocPhan).HasMaxLength(255).IsRequired();
+            entity.Property(x => x.MaKhoa).HasMaxLength(20).IsRequired();
+            entity.Property(x => x.LoaiHocPhan).HasMaxLength(50);
+            entity.Property(x => x.MoTa).HasMaxLength(1000);
+            entity.Property(x => x.TrangThai).HasDefaultValue(true);
+        });
+
+        modelBuilder.Entity<DangKyHocPhan>(entity =>
+        {
+            entity.ToTable("DangKyHocPhan");
+            entity.HasKey(x => x.MaDangKy);
+            entity.Property(x => x.MaSV).HasMaxLength(20).IsRequired();
+            entity.Property(x => x.MaHocPhan).HasMaxLength(20).IsRequired();
+            entity.Property(x => x.MaHocKy).HasMaxLength(20).IsRequired();
+            entity.Property(x => x.NgayDangKy).HasColumnType("datetime2");
             entity.Property(x => x.TrangThai).HasMaxLength(50);
         });
 

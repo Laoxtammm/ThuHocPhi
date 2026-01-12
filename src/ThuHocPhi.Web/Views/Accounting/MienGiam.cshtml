@@ -15,9 +15,9 @@
         <div class="section-block">
             <h3>Phieu phe duyet mien giam</h3>
             <div class="toolbar">
-                <input class="input-text" id="mg-ma-sv" placeholder="Ma sinh vien" />
-                <input class="input-text" id="mg-ma-chinh-sach" placeholder="Ma chinh sach" />
-                <input class="input-text" id="mg-ma-hoc-ky" placeholder="Ma hoc ky" />
+                <input class="input-text" id="mg-ma-sv" placeholder="Ma sinh vien" list="mg-ma-sv-list" />
+                <input class="input-text" id="mg-ma-chinh-sach" placeholder="Ma chinh sach" list="mg-ma-chinh-sach-list" />
+                <input class="input-text" id="mg-ma-hoc-ky" placeholder="Ma hoc ky" list="mg-ma-hoc-ky-list" />
             </div>
             <div class="toolbar">
                 <input class="input-text" id="mg-ghi-chu" placeholder="Noi dung & tieu chuan mien giam" />
@@ -27,6 +27,21 @@
         </div>
     </section>
 </div>
+
+<datalist id="mg-ma-sv-list">
+    <option value="SV001"></option>
+    <option value="SV002"></option>
+    <option value="SV003"></option>
+</datalist>
+<datalist id="mg-ma-chinh-sach-list">
+    <option value="MG_HE_NGHEO"></option>
+    <option value="MG_GIA_DINH_CHINH_SACH"></option>
+    <option value="MG_VUNG_SAU"></option>
+</datalist>
+<datalist id="mg-ma-hoc-ky-list">
+    <option value="HK1-2025-2026"></option>
+    <option value="HK2-2025-2026"></option>
+</datalist>
 
 @section Scripts {
     <script src="~/js/accounting-approvals.js" asp-append-version="true"></script>

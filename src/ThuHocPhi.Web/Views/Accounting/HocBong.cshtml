@@ -55,9 +55,13 @@
         <div class="section-block">
             <h3>Xac nhan hoc bong</h3>
             <div class="toolbar">
-                <input class="input-text" id="hb-ma-sv" placeholder="Ma sinh vien" />
-                <input class="input-text" id="hb-ma-hoc-bong" placeholder="Ma hoc bong" />
-                <input class="input-text" id="hb-ma-hoc-ky" placeholder="Ma hoc ky" />
+                <input class="input-text" id="hb-ma-sv" placeholder="Ma sinh vien" list="hb-ma-sv-list" />
+                <input class="input-text" id="hb-ma-hoc-bong" placeholder="Ma hoc bong" list="hb-ma-hoc-bong-list" />
+                <input class="input-text" id="hb-ma-hoc-ky" placeholder="Ma hoc ky" list="hb-ma-hoc-ky-list" />
+            </div>
+            <div class="toolbar">
+                <input class="input-text" id="hb-khoa-dao-tao" placeholder="Khoa dao tao" list="hb-khoa-dao-tao-list" />
+                <input class="input-text" id="hb-lop-chuyen-nganh" placeholder="Lop chuyen nganh" list="hb-lop-chuyen-nganh-list" />
             </div>
             <div class="toolbar">
                 <input class="input-text" id="hb-ghi-chu" placeholder="Ghi chu (neu co)" />
@@ -67,6 +71,30 @@
         </div>
     </section>
 </div>
+
+<datalist id="hb-ma-sv-list">
+    <option value="SV001"></option>
+    <option value="SV002"></option>
+    <option value="SV003"></option>
+</datalist>
+<datalist id="hb-ma-hoc-bong-list">
+    <option value="HB_A"></option>
+    <option value="HB_B"></option>
+    <option value="HB_LEQUYDON"></option>
+    <option value="HB_GIAM_20"></option>
+</datalist>
+<datalist id="hb-ma-hoc-ky-list">
+    <option value="HK1-2025-2026"></option>
+    <option value="HK2-2025-2026"></option>
+</datalist>
+<datalist id="hb-khoa-dao-tao-list">
+    <option value="K58"></option>
+    <option value="K59"></option>
+</datalist>
+<datalist id="hb-lop-chuyen-nganh-list">
+    <option value="CNPM-K58"></option>
+    <option value="ATTT-K59"></option>
+</datalist>
 
 @section Scripts {
     <script src="~/js/accounting-approvals.js" asp-append-version="true"></script>

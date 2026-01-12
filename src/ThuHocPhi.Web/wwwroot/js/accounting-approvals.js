@@ -53,6 +53,8 @@
       const maSV = document.getElementById("hb-ma-sv")?.value.trim();
       const maHocBong = document.getElementById("hb-ma-hoc-bong")?.value.trim();
       const maHocKy = document.getElementById("hb-ma-hoc-ky")?.value.trim();
+      const khoaDaoTao = document.getElementById("hb-khoa-dao-tao")?.value.trim();
+      const lopChuyenNganh = document.getElementById("hb-lop-chuyen-nganh")?.value.trim();
       const ghiChu = document.getElementById("hb-ghi-chu")?.value.trim();
 
       if (!maSV || !maHocBong || !maHocKy) {
@@ -60,7 +62,14 @@
         return;
       }
 
-      const payload = { maSV, maHocBong, maHocKy, ghiChu: ghiChu || null };
+      const payload = {
+        maSV,
+        maHocBong,
+        maHocKy,
+        khoaDaoTao: khoaDaoTao || null,
+        lopChuyenNganh: lopChuyenNganh || null,
+        ghiChu: ghiChu || null,
+      };
 
       try {
         const result = await postData("/api/hoc-bong/ap-dung", payload);

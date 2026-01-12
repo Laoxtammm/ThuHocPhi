@@ -12,7 +12,7 @@
         <h1>Thanh toan hoc phi sinh vien</h1>
         <p>Theo doi chi tiet cac khoan thu, da thanh toan va con no.</p>
 
-        <div class="section-block">
+        <div class="section-block" data-ma-hoc-ky="HK1_2526">
             <h3>Danh sach cong no chi tiet</h3>
             <table class="portal-table" id="student-payment-table">
                 <thead>
@@ -30,34 +30,7 @@
                         <th>Hanh dong</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr data-ma-sv="SV001">
-                        <td>1</td>
-                        <td>Nguyen Van An</td>
-                        <td>15/01/2005</td>
-                        <td>CNPM-K58</td>
-                        <td>18</td>
-                        <td>12.000.000d</td>
-                        <td>0d</td>
-                        <td>12.000.000d</td>
-                        <td>6.000.000d</td>
-                        <td>6.000.000d</td>
-                        <td><button class="btn secondary" type="button" data-view-detail="SV001">Xem chi tiet</button></td>
-                    </tr>
-                    <tr data-ma-sv="SV002">
-                        <td>2</td>
-                        <td>Tran Thi Bach</td>
-                        <td>20/03/2005</td>
-                        <td>CNPM-K58</td>
-                        <td>16</td>
-                        <td>10.500.000d</td>
-                        <td>50% (Ho ngheo)</td>
-                        <td>5.250.000d</td>
-                        <td>3.000.000d</td>
-                        <td>2.250.000d</td>
-                        <td><button class="btn secondary" type="button" data-view-detail="SV002">Xem chi tiet</button></td>
-                    </tr>
-                </tbody>
+                <tbody id="accounting-summary-body"></tbody>
             </table>
         </div>
 
@@ -88,43 +61,6 @@
         </div>
     </section>
 </div>
-
-<script type="application/json" id="payment-detail-data">
-{
-  "SV001": {
-    "hoTen": "Nguyen Van An",
-    "lop": "CNPM-K58",
-    "tinChi": 18,
-    "daThanhToan": 6000000,
-    "conNo": 6000000,
-    "payments": [
-      {
-        "ky": "HK2 2024/2025",
-        "ngay": "10/05/2025",
-        "soTien": 6000000,
-        "bienLai": "BL2025-0008",
-        "maThanhToan": "SV001 20250510103012 AB12"
-      }
-    ]
-  },
-  "SV002": {
-    "hoTen": "Tran Thi Bach",
-    "lop": "CNPM-K58",
-    "tinChi": 16,
-    "daThanhToan": 3000000,
-    "conNo": 2250000,
-    "payments": [
-      {
-        "ky": "HK1 2025/2026",
-        "ngay": "05/09/2025",
-        "soTien": 3000000,
-        "bienLai": "BL2025-0115",
-        "maThanhToan": "SV002 20250905120001 CD34"
-      }
-    ]
-  }
-}
-</script>
 
 @section Scripts {
     <script src="~/js/accounting-payments.js" asp-append-version="true"></script>

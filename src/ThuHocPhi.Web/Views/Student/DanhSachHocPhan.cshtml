@@ -1,5 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Danh sách học phần";
+@{
+    ViewData["Title"] = "Danh sach hoc phan";
 }
 
 @section Styles {
@@ -9,62 +9,44 @@
 <div class="portal">
     @await Html.PartialAsync("_StudentNav")
     <section class="portal-content">
-        <h1>Danh sách học phần mở đăng ký</h1>
-        <p>Chọn học phần phù hợp với kế hoạch học tập.</p>
+        <h1>Danh sach hoc phan mo dang ky</h1>
+        <p>Chon hoc phan phu hop voi ke hoach hoc tap.</p>
 
-        <table class="portal-table">
+        <table class="portal-table" data-course-table data-course-api="/api/hoc-phan" data-ma-hoc-ky="HK1_2526">
             <thead>
                 <tr>
-                    <th>Mã học phần</th>
-                    <th>Tên học phần</th>
-                    <th>Số tín chỉ</th>
-                    <th>Điều kiện</th>
-                    <th>Hành động</th>
+                    <th>Ma hoc phan</th>
+                    <th>Ten hoc phan</th>
+                    <th>So tin chi</th>
+                    <th>Dieu kien</th>
+                    <th>Hanh dong</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>IT101</td>
-                    <td>Nhập môn lập trình</td>
-                    <td>3</td>
-                    <td>Không</td>
-                    <td><button class="btn" type="button" data-add-course="IT101" data-name="Nhập môn lập trình" data-credits="3">Thêm</button></td>
-                </tr>
-                <tr>
-                    <td>MA201</td>
-                    <td>Giải tích 2</td>
-                    <td>4</td>
-                    <td>Đã học Giải tích 1</td>
-                    <td><button class="btn" type="button" data-add-course="MA201" data-name="Giải tích 2" data-credits="4" data-prereq="MA101">Thêm</button></td>
-                </tr>
-                <tr>
-                    <td>CN301</td>
-                    <td>Công nghệ phần mềm</td>
-                    <td>3</td>
-                    <td>Đã học IT101</td>
-                    <td><button class="btn" type="button" data-add-course="CN301" data-name="Công nghệ phần mềm" data-credits="3" data-prereq="IT101">Thêm</button></td>
+                    <td colspan="5">Dang tai danh sach hoc phan...</td>
                 </tr>
             </tbody>
         </table>
         <p class="note" id="course-note"></p>
 
         <div class="toolbar">
-            <a class="btn secondary" asp-controller="Student" asp-action="DangKyTinChi">Quay lại đăng ký</a>
+            <a class="btn secondary" asp-controller="Student" asp-action="DangKyTinChi">Quay lai dang ky</a>
         </div>
     </section>
 </div>
 
 <div class="modal hidden" id="course-modal">
     <div class="modal-content">
-        <h3>Thông tin học phần</h3>
+        <h3>Thong tin hoc phan</h3>
         <p id="modal-course-name"></p>
         <div class="modal-section">
-            <label>Chọn ca học</label>
+            <label>Chon ca hoc</label>
             <div class="modal-options" id="modal-schedules"></div>
         </div>
         <div class="toolbar">
-            <button class="btn secondary" type="button" id="modal-cancel">Hủy</button>
-            <button class="btn" type="button" id="modal-confirm" disabled>Thêm vào đăng ký</button>
+            <button class="btn secondary" type="button" id="modal-cancel">Huy</button>
+            <button class="btn" type="button" id="modal-confirm" disabled>Them vao dang ky</button>
         </div>
     </div>
 </div>

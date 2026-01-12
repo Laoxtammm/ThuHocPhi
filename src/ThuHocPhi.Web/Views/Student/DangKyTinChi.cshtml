@@ -1,5 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Đăng ký tín chỉ";
+@{
+    ViewData["Title"] = "Dang ky tin chi";
 }
 
 @section Styles {
@@ -9,38 +9,36 @@
 <div class="portal">
     @await Html.PartialAsync("_StudentNav")
     <section class="portal-content">
-        <h1>Đăng ký tín chỉ</h1>
-        <p>Chọn học phần theo kế hoạch đào tạo. Thanh toán học phí đầy đủ trước khi đăng ký thi kết thúc môn.</p>
+        <h1>Dang ky tin chi</h1>
+        <p>Chon hoc phan theo ke hoach dao tao. Thanh toan hoc phi day du truoc khi dang ky thi ket thuc mon.</p>
 
         <div class="toolbar">
-            <a class="btn" asp-controller="Student" asp-action="DanhSachHocPhan">Thêm học phần</a>
-            <button class="btn secondary" type="button" id="btn-save-registration">Lưu đăng ký</button>
-            <span class="badge warn">Học phí chưa hoàn tất</span>
+            <a class="btn" asp-controller="Student" asp-action="DanhSachHocPhan">Them hoc phan</a>
+            <span class="badge warn">Hoc phi chua hoan tat</span>
         </div>
-        <p class="note" id="save-note"></p>
 
         <table class="portal-table">
             <thead>
                 <tr>
-                    <th>Mã học phần</th>
-                    <th>Tên học phần</th>
-                    <th>Số TC</th>
-                    <th>Lịch học</th>
-                    <th>Trạng thái</th>
+                    <th>Ma hoc phan</th>
+                    <th>Ten hoc phan</th>
+                    <th>So TC</th>
+                    <th>Lich hoc</th>
+                    <th>Hanh dong</th>
                 </tr>
             </thead>
             <tbody id="registered-body">
                 <tr>
-                    <td colspan="5">Chưa có học phần nào được đăng ký.</td>
+                    <td colspan="5">Chua co hoc phan nao duoc dang ky.</td>
                 </tr>
             </tbody>
         </table>
 
         <div class="section-block">
-            <h3>Đăng ký thi kết thúc môn</h3>
-            <p>Chỉ mở khi học phí đã thanh toán đầy đủ.</p>
-            <button class="btn disabled" type="button">Đăng ký thi kết thúc môn</button>
-            <div class="alert">Bạn cần thanh toán học phí để kích hoạt chức năng đăng ký thi.</div>
+            <h3>Dang ky thi ket thuc mon</h3>
+            <p>Chi mo khi hoc phi da thanh toan day du.</p>
+            <button class="btn disabled" type="button">Dang ky thi ket thuc mon</button>
+            <div class="alert">Ban can thanh toan hoc phi de kich hoat chuc nang dang ky thi.</div>
         </div>
     </section>
 </div>

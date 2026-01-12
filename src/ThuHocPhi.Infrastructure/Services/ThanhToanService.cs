@@ -24,7 +24,7 @@ public sealed class ThanhToanService : IThanhToanService
         var maGiaoDichNganHangParam = new SqlParameter("@MaGiaoDichNganHang", (object?)request.MaGiaoDichNganHang ?? DBNull.Value);
         var nguoiThuTienParam = new SqlParameter("@NguoiThuTien", (object?)request.NguoiThuTien ?? DBNull.Value);
 
-        var result = await _dbContext.Set<ThanhToanResult>()
+        var data = await _dbContext.Set<ThanhToanResult>()
             .FromSqlRaw(
                 "EXEC dbo.sp_XuLyThanhToan @MaSV, @MaHocKy, @SoTien, @MaPhuongThuc, @MaGiaoDichNganHang, @NguoiThuTien, @XuatBienLai",
                 new SqlParameter("@MaSV", request.MaSV),
@@ -35,9 +35,9 @@ public sealed class ThanhToanService : IThanhToanService
                 nguoiThuTienParam,
                 new SqlParameter("@XuatBienLai", request.XuatBienLai ? 1 : 0))
             .AsNoTracking()
-            .FirstOrDefaultAsync(cancellationToken);
+            .ToListAsync(cancellationToken);
 
-        return result ?? new ThanhToanResult();
+        return data.FirstOrDefault() ?? new ThanhToanResult();
     }
 
     public async Task<IReadOnlyList<GiaoDichDto>> GetGiaoDichAsync(string? maSv, string? maHocKy, CancellationToken cancellationToken)
