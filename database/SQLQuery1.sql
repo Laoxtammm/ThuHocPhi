@@ -483,6 +483,7 @@ GO
 ---------------------------------------------------------------
 -- SP: Tính công nợ (sửa theo schema mới: LopChuyenNganh + KhoaHoc)
 ---------------------------------------------------------------
+/*
 CREATE OR ALTER PROCEDURE dbo.sp_TinhCongNo
     @MaSV VARCHAR(20),
     @MaHocKy VARCHAR(20)
@@ -577,6 +578,26 @@ BEGIN
             INSERT INTO dbo.CongNoChiTiet (MaCongNo, LoaiDong, RefId, MoTa, SoLuong, DonGia, MienGiam)
             VALUES (@MaCongNo, 'PHI_CODINH', NULL, N'Bảo hiểm y tế', 1, @PhiBHYT, 0);
 
+        -- Le phi dich vu (neu co)
+        DECLARE @PhiDichVu DECIMAL(18,2) = 0;
+
+        SELECT TOP 1 @PhiDichVu = bp.DonGia
+        FROM dbo.BieuPhi bp
+        WHERE bp.MaHocKy = @MaHocKy
+          AND bp.MaLoaiPhi = 'LE_PHI_DV'
+          AND (bp.HeDaoTao = @HeDaoTao OR bp.HeDaoTao IS NULL)
+          AND (bp.LoaiHinhDaoTao = @LoaiHinhDaoTao OR bp.LoaiHinhDaoTao IS NULL)
+          AND bp.TrangThai = 1
+          AND bp.NgayApDung <= CAST(GETDATE() AS DATE)
+          AND (bp.NgayHetHan IS NULL OR bp.NgayHetHan >= CAST(GETDATE() AS DATE))
+        ORDER BY bp.NgayApDung DESC;
+
+        SET @PhiDichVu = ISNULL(@PhiDichVu, 0);
+
+        IF @PhiDichVu > 0
+            INSERT INTO dbo.CongNoChiTiet (MaCongNo, LoaiDong, RefId, MoTa, SoLuong, DonGia, MienGiam)
+            VALUES (@MaCongNo, 'PHI_CODINH', NULL, N'L? ph� d?ch v?', 1, @PhiDichVu, 0);
+
         -- tính miễn giảm trên tổng học phí tín chỉ
         DECLARE @TongHocPhi DECIMAL(18,2) = 0;
         DECLARE @TienMienGiam DECIMAL(18,2) = 0;
@@ -626,6 +647,181 @@ BEGIN
     END CATCH
 END;
 GO
+*/
+USE QLHP_HVKTQS;
+GO
+CREATE OR ALTER PROCEDURE dbo.sp_TinhCongNo
+    @MaSV VARCHAR(20),
+    @MaHocKy VARCHAR(20)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @HeDaoTao NVARCHAR(50);
+    DECLARE @LoaiHinhDaoTao NVARCHAR(50);
+
+    SELECT
+        @HeDaoTao = HeDaoTao,
+        @LoaiHinhDaoTao = LoaiHinhDaoTao
+    FROM dbo.SinhVien
+    WHERE MaSV = @MaSV;
+
+    IF @HeDaoTao IS NULL
+        THROW 50010, N'Kh“ng tm th?y sinh viˆn', 1;
+
+    BEGIN TRY
+        BEGIN TRAN;
+
+        DECLARE @MaCongNo BIGINT;
+
+        IF EXISTS (SELECT 1 FROM dbo.CongNo WHERE MaSV=@MaSV AND MaHocKy=@MaHocKy)
+            SELECT @MaCongNo = MaCongNo FROM dbo.CongNo WHERE MaSV=@MaSV AND MaHocKy=@MaHocKy;
+        ELSE
+        BEGIN
+            INSERT INTO dbo.CongNo (MaSV, MaHocKy, HanNop)
+            VALUES (@MaSV, @MaHocKy, NULL);
+            SET @MaCongNo = SCOPE_IDENTITY();
+        END
+
+        -- rebuild lines
+        DELETE FROM dbo.PhanBoThanhToan
+        WHERE MaCongNoCT IN (SELECT MaCongNoCT FROM dbo.CongNoChiTiet WHERE MaCongNo=@MaCongNo);
+
+        DELETE FROM dbo.CongNoChiTiet WHERE MaCongNo=@MaCongNo;
+
+        -- bieu phi hoc phi tin chi
+        DECLARE @DonGiaTinChi DECIMAL(18,2);
+        DECLARE @HasBieuPhi BIT = 0;
+
+        SELECT TOP 1 @DonGiaTinChi = bp.DonGia, @HasBieuPhi = 1
+        FROM dbo.BieuPhi bp
+        WHERE bp.MaHocKy = @MaHocKy
+          AND bp.MaLoaiPhi IN ('HP_TC','HP_CH')
+          AND (bp.HeDaoTao = @HeDaoTao OR bp.HeDaoTao IS NULL)
+          AND (bp.LoaiHinhDaoTao = @LoaiHinhDaoTao OR bp.LoaiHinhDaoTao IS NULL)
+          AND bp.TrangThai = 1
+          AND bp.NgayApDung <= CAST(GETDATE() AS DATE)
+          AND (bp.NgayHetHan IS NULL OR bp.NgayHetHan >= CAST(GETDATE() AS DATE))
+        ORDER BY
+          CASE WHEN bp.LoaiHinhDaoTao = @LoaiHinhDaoTao THEN 0 ELSE 1 END,
+          CASE WHEN bp.HeDaoTao = @HeDaoTao THEN 0 ELSE 1 END,
+          bp.NgayApDung DESC;
+
+        SET @DonGiaTinChi = ISNULL(@DonGiaTinChi, 0);
+
+        IF @HasBieuPhi = 0
+        BEGIN
+            IF @LoaiHinhDaoTao LIKE N'%Quan%' OR @LoaiHinhDaoTao LIKE N'%Quƒn%'
+                SET @DonGiaTinChi = 0;
+            ELSE
+                SET @DonGiaTinChi = 400000;
+        END
+
+        -- build lines tu dang ky
+        INSERT INTO dbo.CongNoChiTiet (MaCongNo, LoaiDong, RefId, MoTa, SoLuong, DonGia, MienGiam)
+        SELECT
+            @MaCongNo,
+            'HP_TINCHI',
+            CAST(dk.MaDangKy AS BIGINT),
+            CONCAT(N'H?c ph¡: ', hp.MaHocPhan, N' - ', hp.TenHocPhan),
+            CAST(hp.SoTinChi AS DECIMAL(18,2)),
+            @DonGiaTinChi,
+            0
+        FROM dbo.DangKyHocPhan dk
+        INNER JOIN dbo.HocPhan hp ON hp.MaHocPhan = dk.MaHocPhan
+        WHERE dk.MaSV = @MaSV
+          AND dk.MaHocKy = @MaHocKy
+          AND dk.TrangThai = N'Da dang ky';
+
+        -- BHYT (neu co)
+        DECLARE @PhiBHYT DECIMAL(18,2) = 0;
+
+        SELECT TOP 1 @PhiBHYT = bp.DonGia
+        FROM dbo.BieuPhi bp
+        WHERE bp.MaHocKy = @MaHocKy
+          AND bp.MaLoaiPhi = 'BHYT'
+          AND (bp.HeDaoTao = @HeDaoTao OR bp.HeDaoTao IS NULL)
+          AND (bp.LoaiHinhDaoTao = @LoaiHinhDaoTao OR bp.LoaiHinhDaoTao IS NULL)
+          AND bp.TrangThai = 1
+          AND bp.NgayApDung <= CAST(GETDATE() AS DATE)
+          AND (bp.NgayHetHan IS NULL OR bp.NgayHetHan >= CAST(GETDATE() AS DATE))
+        ORDER BY bp.NgayApDung DESC;
+
+        SET @PhiBHYT = ISNULL(@PhiBHYT, 0);
+
+        IF @PhiBHYT > 0
+            INSERT INTO dbo.CongNoChiTiet (MaCongNo, LoaiDong, RefId, MoTa, SoLuong, DonGia, MienGiam)
+            VALUES (@MaCongNo, 'PHI_CODINH', NULL, N'B?o hi?m y t?', 1, @PhiBHYT, 0);
+
+        -- Le phi dich vu (neu co)
+        DECLARE @PhiDichVu DECIMAL(18,2) = 0;
+
+        SELECT TOP 1 @PhiDichVu = bp.DonGia
+        FROM dbo.BieuPhi bp
+        WHERE bp.MaHocKy = @MaHocKy
+          AND bp.MaLoaiPhi = 'LE_PHI_DV'
+          AND (bp.HeDaoTao = @HeDaoTao OR bp.HeDaoTao IS NULL)
+          AND (bp.LoaiHinhDaoTao = @LoaiHinhDaoTao OR bp.LoaiHinhDaoTao IS NULL)
+          AND bp.TrangThai = 1
+          AND bp.NgayApDung <= CAST(GETDATE() AS DATE)
+          AND (bp.NgayHetHan IS NULL OR bp.NgayHetHan >= CAST(GETDATE() AS DATE))
+        ORDER BY bp.NgayApDung DESC;
+
+        SET @PhiDichVu = ISNULL(@PhiDichVu, 0);
+
+        IF @PhiDichVu > 0
+            INSERT INTO dbo.CongNoChiTiet (MaCongNo, LoaiDong, RefId, MoTa, SoLuong, DonGia, MienGiam)
+            VALUES (@MaCongNo, 'PHI_CODINH', NULL, N'L? ph? d?ch v?', 1, @PhiDichVu, 0);
+
+        -- tinh mien giam tren tong hoc phi tin chi
+        DECLARE @TongHocPhi DECIMAL(18,2) = 0;
+        DECLARE @TienMienGiam DECIMAL(18,2) = 0;
+
+        SELECT @TongHocPhi = ISNULL(SUM(ThanhTien),0)
+        FROM dbo.CongNoChiTiet
+        WHERE MaCongNo=@MaCongNo AND LoaiDong='HP_TINCHI';
+
+        SELECT @TienMienGiam = ISNULL(SUM(
+            CASE
+                WHEN cs.LoaiMienGiam = N'Ph?n tram' THEN (@TongHocPhi * cs.GiaTriMienGiam / 100.0)
+                ELSE cs.GiaTriMienGiam
+            END
+        ),0)
+        FROM dbo.SinhVien_MienGiam svmg
+        INNER JOIN dbo.ChinhSachMienGiam cs ON cs.MaChinhSach = svmg.MaChinhSach
+        WHERE svmg.MaSV=@MaSV AND svmg.MaHocKy=@MaHocKy AND svmg.TrangThai=1
+          AND cs.TrangThai=1
+          AND (cs.NgayApDung IS NULL OR cs.NgayApDung <= CAST(GETDATE() AS DATE))
+          AND (cs.NgayHetHan IS NULL OR cs.NgayHetHan >= CAST(GETDATE() AS DATE));
+
+        IF @TienMienGiam > @TongHocPhi SET @TienMienGiam = @TongHocPhi;
+
+        DECLARE @TongPhaiNop DECIMAL(18,2) = 0;
+        SELECT @TongPhaiNop = ISNULL(SUM(PhaiThu),0)
+        FROM dbo.CongNoChiTiet
+        WHERE MaCongNo=@MaCongNo;
+
+        UPDATE dbo.CongNo
+        SET TongPhaiNop = @TongPhaiNop,
+            TienMienGiam = @TienMienGiam,
+            NgayCapNhat = SYSUTCDATETIME(),
+            TrangThai = CASE
+                WHEN (TongDaNop >= (@TongPhaiNop - @TienMienGiam)) AND (@TongPhaiNop - @TienMienGiam) > 0 THEN 3
+                WHEN TongDaNop > 0 THEN 2
+                ELSE 1
+            END
+        WHERE MaCongNo=@MaCongNo;
+
+        COMMIT;
+
+        SELECT @MaCongNo AS MaCongNo, @TongPhaiNop AS TongPhaiNop, @TienMienGiam AS TienMienGiam;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK;
+        THROW;
+    END CATCH
+END;
+go
 
 ---------------------------------------------------------------
 -- SP: Thanh toán (giữ nguyên logic allocation)
@@ -901,6 +1097,14 @@ SELECT 'SV001','HB01','HK1_2526', nd.MaNguoiDung
 FROM dbo.NguoiDung nd
 WHERE nd.TenDangNhap='ketoan01';
 
+-- Le phi dich vu
+INSERT INTO dbo.LoaiPhi (MaLoaiPhi, TenLoaiPhi, DonViTinh) VALUES
+('LE_PHI_DV', N'L? ph¡ d?ch v?', N'VND/ky');
+
+INSERT INTO dbo.BieuPhi (MaLoaiPhi, MaHocKy, HeDaoTao, LoaiHinhDaoTao, DonGia, NgayApDung, GhiChu)
+VALUES
+('LE_PHI_DV', 'HK1_2526', N'D?i h?c', N'Dƒn s?',  500000,'2025-08-01', N'L? ph¡ d?ch v?');
+
 -- PTTT
 INSERT INTO dbo.PhuongThucThanhToan (MaPhuongThuc, TenPhuongThuc) VALUES
 ('MB', N'App MB Bank'),
@@ -937,3 +1141,47 @@ SELECT * FROM dbo.PhanBoThanhToan ORDER BY MaPB DESC;
 SELECT * FROM dbo.BienLai ORDER BY NgayXuat DESC;
 SELECT * FROM dbo.SinhVienAnh ORDER BY MaSV, ThuTu;
 GO
+
+
+GO
+USE QLHP_HVKTQS;
+
+CREATE TABLE dbo.ThongBaoHocPhi (
+    MaThongBao BIGINT IDENTITY(1,1) CONSTRAINT PK_ThongBaoHocPhi PRIMARY KEY,
+    MaHocKy VARCHAR(20) NOT NULL,
+    NamHoc VARCHAR(20) NULL,
+    TieuDe NVARCHAR(255) NOT NULL,
+    NoiDung NVARCHAR(MAX) NULL,
+    NgayPhatHanh DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
+    HanNop DATE NULL,
+    DoiTuongApDung NVARCHAR(500) NULL,
+    TongSoSinhVien INT NULL,
+    TongSoTienCongNo DECIMAL(18,2) NULL,
+    TrangThai TINYINT NOT NULL DEFAULT 1,
+    HinhThucGui VARCHAR(50) NULL,
+    ThoiDiemGui DATETIME2 NULL,
+    NguoiPhatHanh INT NULL,
+    NgayTao DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
+    NgayCapNhat DATETIME2 NULL,
+    CONSTRAINT FK_TBHP_HocKy FOREIGN KEY (MaHocKy) REFERENCES dbo.HocKy(MaHocKy),
+    CONSTRAINT FK_TBHP_ND FOREIGN KEY (NguoiPhatHanh) REFERENCES dbo.NguoiDung(MaNguoiDung)
+);
+CREATE INDEX IX_TBHP_MaHocKy ON dbo.ThongBaoHocPhi(MaHocKy);
+CREATE INDEX IX_TBHP_TrangThai ON dbo.ThongBaoHocPhi(TrangThai);
+
+CREATE TABLE dbo.ThongBaoHocPhi_SinhVien (
+    Id BIGINT IDENTITY(1,1) CONSTRAINT PK_ThongBaoHocPhi_SinhVien PRIMARY KEY,
+    MaThongBao BIGINT NOT NULL,
+    MaSV VARCHAR(20) NOT NULL,
+    TrangThaiDoc TINYINT NOT NULL DEFAULT 0,
+    TrangThaiThanhToan TINYINT NOT NULL DEFAULT 1,
+    NgayGui DATETIME2 NULL,
+    NgayXem DATETIME2 NULL,
+    GhiChu NVARCHAR(500) NULL,
+    CONSTRAINT FK_TBHPSV_TB FOREIGN KEY (MaThongBao) REFERENCES dbo.ThongBaoHocPhi(MaThongBao),
+    CONSTRAINT FK_TBHPSV_SV FOREIGN KEY (MaSV) REFERENCES dbo.SinhVien(MaSV),
+    CONSTRAINT UQ_TBHPSV UNIQUE (MaThongBao, MaSV)
+);
+CREATE INDEX IX_TBHPSV_MaSV ON dbo.ThongBaoHocPhi_SinhVien(MaSV);
+CREATE INDEX IX_TBHPSV_TrangThaiDoc ON dbo.ThongBaoHocPhi_SinhVien(TrangThaiDoc);
+
